@@ -17,7 +17,7 @@ export default {
 <template>
     <header class="header">
         <div class="main-logo">
-            <img src="../assets/images/Instagram_logo.svg.png" width="110px" alt="logo-instagame">
+            <img src="/assets/images/Instagram_logo.svg.png" width="110px" alt="logo-instagame">
         </div>
         <nav class="nav">
             <ul class="nav-list">
@@ -39,7 +39,7 @@ export default {
                 </li>
                 <li>
                     <!-- <i class="fa-solid fa-circle-user"></i> -->
-                    <div class="pic-profile-nav"><img src="../assets/images/pic.jpg" alt="profile-pic"></div>
+                    <div class="pic-profile-nav"><img src="/assets/images/pic.jpg" alt="profile-pic"></div>
                     <a href="#">Profil</a>
                 </li>
                 <li class="sub-menu">
