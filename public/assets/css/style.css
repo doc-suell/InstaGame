@@ -1,0 +1,81 @@
+@font-face {
+    font-family: mincraft-rigular;
+    src: url(../fonts/MinecraftRegular-Bmg3.otf);
+}
+
+:root {
+    --primary-color: #238BCF;  
+    --secondary-color: #D5D4D5; 
+    --secondary-hover-color: #F2F2F2; 
+    --secondary-hard-color: #B1B1B1; 
+    --background-color: #FAFAFA; 
+    --text-color: #232323;  
+    
+    --font-logos-text: 18px;
+    --font-logos-links: 20px;
+  }
+
+
+  /* -----------------HEADER-----------------  */
+
+.header{
+    width: 250px;
+    height: 100vh;
+    border: 1px solid var(--secondary-color);
+    padding-top: 25px;
+    padding-left: 10px;
+}
+
+.main-logo{
+    padding-bottom: 35px;
+    padding-left: 13px;
+}
+
+.nav-list>li{
+    display: flex;
+    align-items: center;
+    width: 95%;
+    margin-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 13px;
+
+}
+
+.nav-list>li>i{
+    font-size: var(--font-logos-links);
+    color: var(--secondary-hard-color);
+}
+.nav-list>li>a{
+    font-family: mincraft-rigular;
+    width: 95%;
+    margin-left: 15px;
+    font-size: var(--font-logos-text);
+    color: var(--secondary-hard-color);
+}
+
+
+.pic-profile-nav{
+    width: 25px;
+    height: 25px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.nav-list>li:hover{
+    cursor: pointer;
+    background-color: var(--secondary-hover-color);
+    border-radius: 7px;
+    transition: 0.2s ease-in;
+}
+
+.sub-menu 
+{
+    margin-top: 280px;
+}
+
+
+ /* ----------------- END HEADER-----------------  */
+
+
