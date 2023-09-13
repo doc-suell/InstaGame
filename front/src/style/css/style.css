@@ -156,6 +156,11 @@ nav{
   .nav-item{
     margin: 10px 5px;
   }
+  .modal{
+    bottom: 78px;
+    right: 10px;
+    left: auto;
+  }
 
 }
 

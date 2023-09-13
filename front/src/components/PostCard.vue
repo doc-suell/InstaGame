@@ -21,7 +21,7 @@ export default {
 
         <div class="flex justify-between p-3">
             <div class="flex flew-row">
-                <div class="pic-profile-card mr-3"><img src="/assets/images/pic.jpg" alt="profile-pic"></div>
+                <div class="pic-profile-card mr-3"><img src="/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="profile-pic"></div>
                 <p class="text-xl">Jonathan</p>
             </div>
             <div>
