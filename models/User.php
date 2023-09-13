@@ -4,7 +4,6 @@ include_once "./config/database.php";
 
 class User
 {
-    private $db;
     private ?int $id;
     private string $username;
     private string $email;

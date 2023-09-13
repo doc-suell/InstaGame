@@ -4,7 +4,6 @@ include_once "./config/database.php";
 
 class Comment
 {
-
     function __construct(
         private ?int $id,
         private string $postId,
@@ -14,27 +13,21 @@ class Comment
     ) {
     }
 
-    public static function getComments()
+    public static function getComments(Database $db)
     {
-        $instance = Database::getInstance();
-        $conn = $instance->getConnection();
-        $stmt = $conn->query("SELECT * FROM `comments`");
+        $stmt = $db->getConnection()->query("SELECT * FROM `comments`");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function getCommentById($id)
+    public static function getCommentById(Database $db,$id)
     {
-        $instance = Database::getInstance();
-        $conn = $instance->getConnection();
-        $stmt = $conn->query("SELECT * FROM `comments` WHERE `id` = '$id'");
+        $stmt = $db->getConnection()->query("SELECT * FROM `comments` WHERE `id` = '$id'");
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function createComment($comment)
+    public static function createComment(Database $db, $comment)
     {
-        $instance = Database::getInstance();
-        $conn = $instance->getConnection();
-        $stmt = $conn->prepare("INSERT INTO comments (user_id, post_id, comment) VALUES
+        $stmt = $db->getConnection()->prepare("INSERT INTO comments (user_id, post_id, comment) VALUES
         (:userId, :postId, :comment)");
         $userId = $comment->getUserId();
         $postId = $comment->getPostId();
@@ -46,27 +39,23 @@ class Comment
         $stmt->execute();
     }
 
-    public static function deleteComment($comment)
+    public static function deleteComment(Database $db, $comment)
     {
-        $instance = Database::getInstance();
-        $conn = $instance->getConnection();
-        $query = $conn->prepare("DELETE FROM comments WHERE id = :id");
+        $stmt = $db->getConnection()->prepare("DELETE FROM comments WHERE id = :id");
         $id = $comment->getId();
-        $query->bindParam(':id', $id);
-        $query->execute();
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
     }
 
-    public static function updateComment($comment, $text)
+    public static function updateComment(Database $db, $comment, $text)
     {
-        $instance = Database::getInstance();
-        $conn = $instance->getConnection();
-        $query = $conn->prepare("UPDATE comments SET comment = :comment WHERE id = :id");
+        $stmt = $db->getConnection()->prepare("UPDATE comments SET comment = :comment WHERE id = :id");
         $id = $comment->getId();
-        $query->bindParam(':comment', $text);
-        $query->bindParam(':id', $id);
+        $stmt->bindParam(':comment', $text);
+        $stmt->bindParam(':id', $id);
         var_dump($id, $text);
 
-        $query->execute();
+        $stmt->execute();
     }
 
 
