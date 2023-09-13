@@ -1,16 +1,18 @@
-@font-face {
-    font-family: mincraft-rigular;
-    src: url(../assets/fonts/MinecraftRegular-Bmg3.otf);
-}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Nunito+Sans:opsz@6..12&display=swap');
+
 
 :root {
     --primary-color: #238BCF;  
-    --secondary-color: #D5D4D5; 
+    --secondary-color: #eceaec; 
     --secondary-hover-color: #F2F2F2; 
     --secondary-hard-color: #B1B1B1; 
     --background-color: #FAFAFA; 
     --text-color: #232323;  
-    
+    --sideBar-color: #0e0e0e;  
+    --icons-color: white;  
+    --gradient-color: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(242,72,72,1) 100%);
     --font-logos-text: 18px;
     --font-logos-links: 20px;
   }
@@ -18,64 +20,189 @@
 
   /* -----------------HEADER-----------------  */
 
-.header{
-    width: 250px;
-    height: 100vh;
-    border: 1px solid var(--secondary-color);
-    padding-top: 25px;
-    padding-left: 10px;
+  body{
+    font-family: 'Nunito Sans', sans-serif;
+    /* background: var(--gradient-color); */
+  }
+
+nav{
+  height: 100%;
+  width: 70px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: var(--sideBar-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0px;
 }
 
-.main-logo{
-    padding-bottom: 35px;
-    padding-left: 13px;
-}
-
-.nav-list>li{
+.navigation{
     display: flex;
-    align-items: center;
-    width: 95%;
-    margin-bottom: 15px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 13px;
-
+    flex-direction: column;
+    align-items: center ;
 }
 
-.nav-list>li>i{
-    font-size: var(--font-logos-links);
-    color: var(--secondary-hard-color);
+.u-navigation{
+  display: flex;
+  flex-direction: column;
+  align-items: center ;
+  padding-top: 90px;
 }
-.nav-list>li>a{
-    font-family: mincraft-rigular;
-    width: 95%;
-    margin-left: 15px;
-    font-size: var(--font-logos-text);
-    color: var(--secondary-hard-color);
+
+.nav-item{
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.nav-item:hover{
+  background-color: rgba(133, 133, 133, 0.38);
+  border-radius: 7px;
+  transition: background-color 0.5s ease 0s;
+}
+
+
+
+.link-item path {
+  fill: var(--secondary-color);
 }
 
 
 .pic-profile-nav{
-    width: 25px;
-    height: 25px;
-    border: 1px solid var(--secondary-color);
-    border-radius: 50%;
-    overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--secondary-color);
+  border-radius: 50%;
+  overflow: hidden;
 }
 
-.nav-list>li:hover{
-    cursor: pointer;
-    background-color: var(--secondary-hover-color);
-    border-radius: 7px;
-    transition: 0.2s ease-in;
+
+.modal{
+  position: absolute;
+  background-color: var(--sideBar-color);
+  color: white;
+  border-radius: 10px;
+  width: 160px;
+  height: 80px;
+  bottom: 20px;
+  left: 80px;
+  overflow: hidden;
 }
 
-.sub-menu 
-{
-    margin-top: 280px;
+.modal>ul{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+
+.link-modal{
+  padding-top: 5px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal>ul>li>a{
+  margin-left: 12px;
+}
+
+
+.link-modal path{
+  fill: white ;
+}
+
+
+.link-modal:hover{
+  background: var(--gradient-color);
+  transition: background 1s ease 0s;
+}
+
+
+
+
+
+@media screen and (max-width: 500px) {
+  nav {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0; 
+    height: 70px;
+    width: 100%; 
+    display: flex;
+    flex-direction: row;
+    padding: 0 20px;
+  }
+
+  .logo{
+    display: none;
+  }
+
+  .u-navigation{
+    display: flex;
+    flex-direction: row;
+    align-items: center ;
+    padding: 0;
+  }
+  .nav-item{
+    margin: 10px 5px;
+  }
+
+}
+
 
 
  /* ----------------- END HEADER-----------------  */
+
+
+
+
+ /* -----------------  SEARCH-FORM -----------------  */
+
+.search-bar{
+  width: 100%;
+  padding: 20px 0px;
+  border-bottom: double 1px transparent;
+  background-image: linear-gradient(white, white), 
+                    linear-gradient(to right, rgba(63,94,251,1), rgba(242,72,72,1));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  
+
+}
+
+
+.form{
+  width: 70%;
+  margin: auto;
+}
+
+
+.search-input{
+  width: 100%;
+  height: 40px;
+  outline: none;
+  border-radius: 20px;
+  padding-left: 20px;
+  border: double 3px transparent;
+  background-image: linear-gradient(white, white), 
+                    linear-gradient(to right, rgba(63,94,251,1), rgba(242,72,72,1));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  
+  
+}
+
+
+ /* ----------------- END SEARCH-FORM -----------------  */
 
 

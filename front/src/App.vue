@@ -3,6 +3,7 @@ import Footer from '../src/components/Footer.vue';
 import NavBar from '../src/components/NavBar.vue';
 
 
+
 export default {
   name: 'App',
   setup() {
@@ -22,6 +23,8 @@ export default {
   </header>
   <main>
     <NavBar />
+    <router-view></router-view>
+
   </main>
 
   <Footer></Footer>

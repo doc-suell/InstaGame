@@ -1,6 +1,6 @@
 <?php
 
-include_once "../includes/db-connection.php";
+include_once "../../config/database.php";
 
 class Post {
     private ?int $id;
@@ -15,6 +15,14 @@ class Post {
         $this->description = $description;
         $this->postPicture = $postPicture;
         $this->publicationDate = $publicationDate;
+    }
+
+
+    public static function showPosts(){
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->query("SELECT * FROM `posts`");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
