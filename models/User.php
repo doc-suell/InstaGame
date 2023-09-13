@@ -20,6 +20,56 @@ class User {
         
     }
 
+    public static function getUser(){
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->query('SELECT * FROM user');
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getUserById(int $id){
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->query("SELECT * FROM user WHERE id = $id");
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function getUserByUsername(string $username){
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->query("SELECT * FROM user WHERE username = $username");
+        return  $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function getUserByEmail(string $email){
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->query('SELECT * FROM user WHERE email = ?');
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    public static function addUser(string $username, string $email, string $password, string $profilePicture){
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->prepare('INSERT INTO user (username, email, password, profilePicture) VALUES (?, ?, ?, ?)');
+        $stmt->execute([$username, $email, $password, $profilePicture]);
+    }
+
+    public static function updateUser(int $id, string $username, string $email, string $password, string $profilePicture){
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->prepare('UPDATE user SET username = ?, email = ?, password = ?, profilePicture = ? WHERE id = ?');
+        $stmt->execute([$username, $email, $password, $profilePicture, $id]);
+    }
+
+    public static function deleteUser(int $id){
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->prepare('DELETE FROM user WHERE id = ?');
+        $stmt->execute([$id]);
+    }
+
+     
     // Méthodes getters
     public function getId(): int {
         return $this->id;
