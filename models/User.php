@@ -1,6 +1,9 @@
 <?php
 
+include_once "./config/database.php";
+
 class User {
+    private $db;
     private ?int $id;
     private string $username;
     private string $email;
@@ -17,9 +20,54 @@ class User {
         $this->password = $password;
         $this->profilePicture = $profilePicture;
         $this->registrationDate = $registrationDate;
+        $this->db = new Database();
         
     }
 
+    public static function getUser() {
+        $db = new Database();
+        $stmt = $db->getConnection()->query('SELECT * FROM users');
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getsById(int $id) {
+        $db = new Database();
+        $stmt = $db->getConnection()->query("SELECT * FROM users WHERE id = $id");
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function getsByUsername(string $username) {
+        $db = new Database();
+        $stmt = $db->getConnection()->query("SELECT * FROM users WHERE username = '$username'");
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function getUserByEmail(string $email) {
+        $db = new Database();
+        $stmt = $db->getConnection()->prepare('SELECT * FROM users WHERE email = ?');
+        $stmt->execute([$email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    public static function addUser(string $username, string $email, string $password, string $profilePicture) {
+        $db = new Database();
+        $stmt = $db->getConnection()->prepare('INSERT INTO users (username, email, password, profile_picture) VALUES (?, ?, ?, ?)');
+        $stmt->execute([$username, $email, $password, $profilePicture]);
+    }
+
+    public static function updateUser(int $id, string $username, string $email, string $password, string $profilePicture) {
+        $db = new Database();
+        $stmt = $db->getConnection()->prepare('UPDATE users SET username = ?, email = ?, password = ?, profile_picture = ? WHERE id = ?');
+        $stmt->execute([$username, $email, $password, $profilePicture, $id]);
+    }
+
+    public static function deleteUser(int $id) {
+        $db = new Database();
+        $stmt = $db->getConnection()->prepare('DELETE FROM users WHERE id = ?');
+        $stmt->execute([$id]);
+    }
+
+     
     // Méthodes getters
     public function getId(): int {
         return $this->id;

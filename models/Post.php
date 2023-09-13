@@ -26,6 +26,7 @@ class Post {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+<<<<<<< HEAD
 
     // ADD POST FUNCTION
     public  function addPost(){
@@ -55,6 +56,8 @@ class Post {
 
 
 
+=======
+>>>>>>> 2a2c7a10dd10656d8b00de9fc891fd9d133572f4
     // Méthodes getters
     public function getId(): int {
         return $this->id;
