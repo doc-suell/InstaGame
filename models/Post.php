@@ -1,6 +1,6 @@
 <?php
 
-include_once "../../config/database.php";
+include_once "./config/database.php";
 
 class Post {
     private ?int $id;
