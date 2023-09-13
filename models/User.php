@@ -1,6 +1,7 @@
 <?php
 
 class User {
+    private $db;
     private ?int $id;
     private string $username;
     private string $email;
@@ -17,55 +18,43 @@ class User {
         $this->password = $password;
         $this->profilePicture = $profilePicture;
         $this->registrationDate = $registrationDate;
+        $this->db = new Database();
         
     }
 
-    public static function getUser(){
-        $db = new Database();
-        $conn = $db->getConnection();
-        $stmt = $conn->query('SELECT * FROM user');
+    public function getUser() {
+        $stmt = $this->db->getConnection()->query('SELECT * FROM user');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function getUserById(int $id){
-        $db = new Database();
-        $conn = $db->getConnection();
-        $stmt = $conn->query("SELECT * FROM user WHERE id = $id");
+    public function getUserById(int $id) {
+        $stmt = $this->db->getConnection()->query("SELECT * FROM user WHERE id = $id");
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function getUserByUsername(string $username){
-        $db = new Database();
-        $conn = $db->getConnection();
-        $stmt = $conn->query("SELECT * FROM user WHERE username = $username");
+    public function getUserByUsername(string $username) {
+        $stmt = $this->db->getConnection()->query("SELECT * FROM user WHERE username = '$username'");
         return  $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function getUserByEmail(string $email){
-        $db = new Database();
-        $conn = $db->getConnection();
-        $stmt = $conn->query('SELECT * FROM user WHERE email = ?');
+    public function getUserByEmail(string $email) {
+        $stmt = $this->db->getConnection()->prepare('SELECT * FROM user WHERE email = ?');
+        $stmt->execute([$email]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
-    public static function addUser(string $username, string $email, string $password, string $profilePicture){
-        $db = new Database();
-        $conn = $db->getConnection();
-        $stmt = $conn->prepare('INSERT INTO user (username, email, password, profilePicture) VALUES (?, ?, ?, ?)');
+    public function addUser(string $username, string $email, string $password, string $profilePicture) {
+        $stmt = $this->db->getConnection()->prepare('INSERT INTO user (username, email, password, profilePicture) VALUES (?, ?, ?, ?)');
         $stmt->execute([$username, $email, $password, $profilePicture]);
     }
 
-    public static function updateUser(int $id, string $username, string $email, string $password, string $profilePicture){
-        $db = new Database();
-        $conn = $db->getConnection();
-        $stmt = $conn->prepare('UPDATE user SET username = ?, email = ?, password = ?, profilePicture = ? WHERE id = ?');
+    public function updateUser(int $id, string $username, string $email, string $password, string $profilePicture) {
+        $stmt = $this->db->getConnection()->prepare('UPDATE user SET username = ?, email = ?, password = ?, profilePicture = ? WHERE id = ?');
         $stmt->execute([$username, $email, $password, $profilePicture, $id]);
     }
 
-    public static function deleteUser(int $id){
-        $db = new Database();
-        $conn = $db->getConnection();
-        $stmt = $conn->prepare('DELETE FROM user WHERE id = ?');
+    public function deleteUser(int $id) {
+        $stmt = $this->db->getConnection()->prepare('DELETE FROM user WHERE id = ?');
         $stmt->execute([$id]);
     }
 
