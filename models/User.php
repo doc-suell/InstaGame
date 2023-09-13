@@ -12,7 +12,6 @@ class User
     private string $profilePicture;
     private string $registrationDate;
 
-
     // Constructeur
     public function __construct(?int $id,  $username, $email, $password, $profilePicture, $registrationDate)
     {

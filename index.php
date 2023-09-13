@@ -1,7 +1,17 @@
 <?php 
-include_once "./includes/header.php";
-?> 
 
 
+ include_once "models/Post.php";
+ include_once "models/Comment.php" ;
+ include_once "config/database.php" ;
 
-<?php  include_once "./includes/footer.php";?>
+ $comment = new Comment(
+    null,
+    15,
+    13,
+    "lol",
+    null
+ );
+
+ $comment::createComment($comment);
+

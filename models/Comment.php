@@ -1,41 +1,104 @@
-<?php 
-class Comment {
-    private int $id;
-    private int $postId;
-    private int $userId;
-    private string $text;
-    private string $createdAt;
+<?php
 
-    public function __construct(int $postId, int $userId, string $text) {
-        $this->postId = $postId;
-        $this->userId = $userId;
-        $this->text = $text;
-        $this->createdAt = date('Y-m-d H:i:s');
+include_once "./config/database.php";
+
+class Comment
+{
+
+    function __construct(
+        private ?int $id,
+        private string $postId,
+        private string $userId,
+        private string $text,
+        private ?string $createdAt
+    ) {
     }
 
+    public static function getComments()
+    {
+        $instance = Database::getInstance();
+        $conn = $instance->getConnection();
+        $stmt = $conn->query("SELECT * FROM `comments`");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getCommentById($id)
+    {
+        $instance = Database::getInstance();
+        $conn = $instance->getConnection();
+        $stmt = $conn->query("SELECT * FROM `comments` WHERE `id` = '$id'");
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function createComment($comment)
+    {
+        $instance = Database::getInstance();
+        $conn = $instance->getConnection();
+        $stmt = $conn->prepare("INSERT INTO comments (user_id, post_id, comment) VALUES
+        (:userId, :postId, :comment)");
+        $userId = $comment->getUserId();
+        $postId = $comment->getPostId();
+        $comment = $comment->getText();
+
+        $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':postId', $postId);
+        $stmt->bindParam(':comment', $comment);
+        $stmt->execute();
+    }
+
+    public static function deleteComment($comment)
+    {
+        $instance = Database::getInstance();
+        $conn = $instance->getConnection();
+        $query = $conn->prepare("DELETE FROM comments WHERE id = :id");
+        $id = $comment->getId();
+        $query->bindParam(':id', $id);
+        $query->execute();
+    }
+
+    public static function updateComment($comment, $text)
+    {
+        $instance = Database::getInstance();
+        $conn = $instance->getConnection();
+        $query = $conn->prepare("UPDATE comments SET comment = :comment WHERE id = :id");
+        $id = $comment->getId();
+        $query->bindParam(':comment', $text);
+        $query->bindParam(':id', $id);
+        var_dump($id, $text);
+
+        $query->execute();
+    }
+
+
     // Méthodes getters
-    public function getId(): int {
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function getPostId(): int {
+    public function getPostId(): int
+    {
         return $this->postId;
     }
 
-    public function getUserId(): int {
+    public function getUserId(): int
+    {
         return $this->userId;
     }
 
-    public function getText(): string {
+    public function getText(): string
+    {
         return $this->text;
     }
 
-    public function getCreatedAt(): string {
+    public function getCreatedAt()
+    {
         return $this->createdAt;
     }
 
     // Méthodes setters
-    public function setText(string $text) {
+    public function setText(string $text)
+    {
         $this->text = $text;
     }
 }

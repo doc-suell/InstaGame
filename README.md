@@ -5,21 +5,15 @@
 
 👻Arnaud humen :
 
-- 1
-- 2
-- 3
+- CRUD User.php
 
 👾souhail naji :
 
-- 1
-- 2
-- 3
+- CRUD Post.php
 
 🤖Jonathan :
 
-- 1
-- 2
-- 3
+- CRUD Comment.php
 
 ## Tech Stack
 
