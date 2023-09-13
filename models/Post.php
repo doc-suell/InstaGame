@@ -26,7 +26,20 @@ class Post {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-<<<<<<< HEAD
+
+    // SHOW SINGLE POSTS FUNCTION
+    public static function getPostById($postId){
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->prepare("SELECT * FROM `posts` WHERE id = :id ");
+        $stmt->bindParam(":id", $postId);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+    }
+
 
     // ADD POST FUNCTION
     public  function addPost(){
@@ -44,20 +57,33 @@ class Post {
     public function updatePost(){
         $db = new Database();
         $conn = $db->getConnection();
-        $stmt = $conn->prepare("UPDATE `posts` SET `post_picture`='[value-3]',`description`='[value-4]',`created_at`='[value-5]' WHERE `posts`.`id` = :id");
+        $stmt = $conn->prepare("UPDATE `posts` SET `post_picture`= :postPicture,`description`=:description,`created_at`= :publicationDate WHERE `posts`.`id` = :id");
         $stmt->bindParam(":id", $this->id);
         $stmt->bindParam(":postPicture", $this->postPicture);
         $stmt->bindParam(":postPicture", $this->description);
         $stmt->bindParam(":postPicture", $this->publicationDate);
-        
+
+        return $stmt->execute();
+    }
+
+    
+    // DELETE POST FUNCTION
+    public static function deletePost($postId){
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->prepare("DELETE FROM `posts` WHERE id = :id");
+        $stmt->bindParam(":id", $postId);
         return $stmt->execute();
     }
 
 
 
 
-=======
->>>>>>> 2a2c7a10dd10656d8b00de9fc891fd9d133572f4
+
+
+
+
+
     // Méthodes getters
     public function getId(): int {
         return $this->id;
