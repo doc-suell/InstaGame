@@ -53,7 +53,7 @@ import SearchBar from './SearchBar.vue';
         </div>
         <!-- PROFILE LINK MODALE  -->
         <router-link to="#" class="pic-profile-nav">
-            <img src="../../public/assets/images/pic.jpg" alt="pic-profil">
+            <img src="/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="pic-profil">
         </router-link>
         <!-- END PROFILE LINK MODALE  -->
     </nav>  
