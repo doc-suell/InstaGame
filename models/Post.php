@@ -1,6 +1,6 @@
 <?php
 
-include_once "../../config/database.php";
+include_once "./config/database.php";
 
 class Post {
     private ?int $id;
@@ -24,8 +24,6 @@ class Post {
         $stmt = $conn->query("SELECT * FROM `posts`");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-
 
     // Méthodes getters
     public function getId(): int {
