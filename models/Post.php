@@ -20,9 +20,7 @@ class Post {
 
     // SHOW ALL POSTS FUNCTION
     public static function showPosts(Database $db){
-        $instance = Database::getInstance();
-        $conn = $instance->getConnection();
-        $stmt = $conn->query("SELECT * FROM `posts`");
+        $stmt = $db->getConnection()->query("SELECT * FROM `posts`");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
