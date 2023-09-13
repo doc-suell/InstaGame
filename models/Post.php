@@ -25,6 +25,16 @@ class Post {
     }
 
 
+    // SHOW SINGLE POSTS FUNCTION
+    public static function showSinglePost(Database $db, $postId){
+        $stmt = $db->getConnection()->prepare("SELECT * FROM `posts` WHERE `id` = :id");
+        $stmt->bindParam(":id", $postId);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
     // ADD POST FUNCTION
     public  function addPost(Database $db){
         $stmt = $db->getConnection()->prepare("INSERT INTO `posts`(`id`, `user_id`, `post_picture`, `description`, `created_at`) VALUES (NULL,1,:postPicture,:description,:publicationDate)");
