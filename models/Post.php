@@ -1,6 +1,6 @@
 <?php
 
-include_once "../../config/database.php";
+include_once "./config/database.php";
 
 class Post {
     private ?int $id;
@@ -18,12 +18,40 @@ class Post {
     }
 
 
+    // SHOW ALL POSTS FUNCTION
     public static function showPosts(){
         $db = new Database();
         $conn = $db->getConnection();
         $stmt = $conn->query("SELECT * FROM `posts`");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+    // ADD POST FUNCTION
+    public  function addPost(){
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->prepare("INSERT INTO `posts`(`id`, `user_id`, `post_picture`, `description`, `created_at`) VALUES (NULL,1,:postPicture,:description,:publicationDate)");
+        $stmt->bindParam(":postPicture", $this->postPicture);
+        $stmt->bindParam(":postPicture", $this->description);
+        $stmt->bindParam(":postPicture", $this->publicationDate);
+        
+        return $stmt->execute();
+    }
+
+    // EDIT POST FUNCTION
+    public function updatePost(){
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->prepare("UPDATE `posts` SET `post_picture`='[value-3]',`description`='[value-4]',`created_at`='[value-5]' WHERE `posts`.`id` = :id");
+        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":postPicture", $this->postPicture);
+        $stmt->bindParam(":postPicture", $this->description);
+        $stmt->bindParam(":postPicture", $this->publicationDate);
+        
+        return $stmt->execute();
+    }
+
 
 
 
