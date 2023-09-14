@@ -8,7 +8,7 @@ class User
     private string $username;
     private string $email;
     private string $password;
-    private string $profilePicture;
+    private ?string $profilePicture;
     private ?string $registrationDate;
 
     // Constructeur
