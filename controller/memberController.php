@@ -14,14 +14,11 @@ include_once "../models/User.php";
 
 if(isset($_POST['action'])){
     if($_POST['action'] == "addMember"){
-        $data = json_decode(file_get_contents("php://input"), true); // Récupérez les données POST JSON
 
-        // Vous pouvez accéder aux données comme ceci :
-        $username = $data->username;
-        $password = $data->password;
-        $email = $data->email;
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $email =  $_POST['email'];
 
-        // Traitez les données comme vous le souhaitez
         $user = new User(NULL, $username, $email, $password, $profilePicture, $db);
         User::addUser($username, $email, $password, $db);
 
@@ -33,6 +30,4 @@ if(isset($_POST['action'])){
 } else {
     echo json_encode(["message" => "Aucune action spécifiée"]);
 }
-?>
-
 ?>
