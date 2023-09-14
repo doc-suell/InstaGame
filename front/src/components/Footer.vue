@@ -1,2 +1,2 @@
 <script></script>
-<template>yo</template>
+<template></template>
