@@ -2,11 +2,12 @@
   <div>
     <div class="card max-w-[35%] mx-auto" v-for="post in posts" :key="post.id">
       <div class="flex justify-between p-3">
-        <div class="flex flew-row">
+        <div class="flex flex-col">
           <div class="pic-profile-card mr-3">
             <img src="/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="profile-pic" />
           </div>
           <p class="text-xl text-black">{{ post.description }}</p>
+          <p class="text-xl text-black">{{ post.username }}</p>
         </div>
         <div>
           <button>

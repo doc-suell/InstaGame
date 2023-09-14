@@ -5,15 +5,15 @@
 
 👻Arnaud humen :
 
-- CRUD User.php
+- CRUD User.php + login + signup
 
 👾souhail naji :
 
-- CRUD Post.php
+- CRUD Post.php + card styling  + comment popup + (Post card)
 
 🤖Jonathan :
 
-- CRUD Comment.php
+- CRUD Comment.php + profile + footer
 
 ## Tech Stack
 
