@@ -8,6 +8,7 @@ import Login from './views/Login.vue'
 import Profil from './views/Profil.vue'
 import Create from './views/Create.vue'
 import Saved from './views/SavedPosts.vue'
+import SignUp from './views/SignUp.vue'
 
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(),
@@ -36,6 +37,11 @@ const router = VueRouter.createRouter({
             path: '/saved',
             name: 'Saved',
             component: Saved
+        },
+        {
+            path: '/signup',
+            name: 'SignUp',
+            component: SignUp
         },
 
     ]

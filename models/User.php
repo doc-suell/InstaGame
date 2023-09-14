@@ -1,6 +1,6 @@
 <?php
 
-include_once "./config/database.php";
+include_once "../config/database.php";
 
 class User
 {
@@ -47,10 +47,10 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function addUser(string $username, string $email, string $password, string $profilePicture, Database $db)
+    public static function addUser(string $username, string $email, string $password, Database $db)
     {
-        $stmt = $db->getConnection()->prepare('INSERT INTO users (username, email, password, profile_picture) VALUES (?, ?, ?, ?)');
-        $stmt->execute([$username, $email, $password, $profilePicture]);
+        $stmt = $db->getConnection()->prepare('INSERT INTO users (username, email, password) VALUES (?, ?, ?)');
+        $stmt->execute([$username, $email, $password]);
     }
 
     public static function updateUser(int $id, string $username, string $email, string $password, string $profilePicture, Database $db)
