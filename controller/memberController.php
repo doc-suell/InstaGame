@@ -13,15 +13,14 @@ header("Access-Control-Allow-Headers: Content-Type");
 include_once "../models/User.php";
 
 if(isset($_POST['action'])){
-    if($_POST['action'] == "addMember"){
-        $profilePicture = ""; // Définissez la valeur appropriée pour profilePicture
+    if($_POST['action'] == "addMember"){// Définissez la valeur appropriée pour profilePicture
         $db = new Database();
 
         $username = $_POST['username'];
         $password = $_POST['password'];
         $email =  $_POST['email'];
 
-        $user = new User(NULL, $username, $email, $password, $profilePicture, NULL);
+        $user = new User(NULL, $username, $email, $password, NULL, NULL);
         User::addUser($username, $email, $password, $db);
 
         // Réponse JSON de succès (ou tout autre message)
