@@ -9,7 +9,7 @@ class User
     private string $email;
     private string $password;
     private string $profilePicture;
-    private string $registrationDate;
+    private ?string $registrationDate;
 
     // Constructeur
     public function __construct(?int $id,  $username, $email, $password, $profilePicture, $registrationDate)
