@@ -14,7 +14,6 @@ $db = new Database();
 
 if(isset($_POST['action'])){
     if($_POST['action'] == "addPost"){
-
         $postPicture = $_POST['postPicture'];
         $description = $_POST['description'];
         $user_id =  $_POST['user_id'];
@@ -26,6 +25,16 @@ if(isset($_POST['action'])){
         echo json_encode(["message" => "Post ajouté avec succès"]);
     } else {
         echo json_encode(["message" => "Action non reconnue"]);
+    }
+    if($_POST["action"] == "getPosts") {
+
+        $posts = Post::showPosts($db);
+        // Répondez avec les données au format JSON
+        header('Content-Type: application/json');
+        echo json_encode($posts);
+        exit;
+    }else{
+        echo "Action non reconue";
     }
 } else {
     echo json_encode(["message" => "Aucune action spécifiée"]);
