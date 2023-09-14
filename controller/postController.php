@@ -5,22 +5,25 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET , POST, PUT, DELETE, OPTIONS');;
 header("Access-Control-Allow-Headers: X-Requested-With");
 header("Access-Control-Allow-Headers: Content-Type");
+include_once "../config/database.php";
+include_once "../models/Post.php";
 
 
-include_once "../models/User.php";
+$db = new Database();
+
 
 if(isset($_POST['action'])){
-    if($_POST['action'] == "addMember"){
+    if($_POST['action'] == "addPost"){
 
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $email =  $_POST['email'];
+        $postPicture = $_POST['postPicture'];
+        $description = $_POST['description'];
+        $user_id =  $_POST['user_id'];
 
-        $user = new User(NULL, $username, $email, $password, $profilePicture, $db);
-        User::addUser($username, $email, $password, $db);
+        $post = new Post(null, $user_id, $description, $postPicture, null);
+        $post->addPost($post, $db);
 
         // Réponse JSON de succès (ou tout autre message)
-        echo json_encode(["message" => "Utilisateur ajouté avec succès"]);
+        echo json_encode(["message" => "Post ajouté avec succès"]);
     } else {
         echo json_encode(["message" => "Action non reconnue"]);
     }
