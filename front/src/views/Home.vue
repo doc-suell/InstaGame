@@ -1,6 +1,7 @@
 <script>
 
 import axios from 'axios';
+import PostCard from "../components/PostCard.vue";
 
 export default {
     data() {
@@ -24,6 +25,9 @@ export default {
                 console.error(error);
             });
     },
+    components: {
+        PostCard,
+    }
 };
 
 
@@ -32,7 +36,8 @@ export default {
 <template>
     <div class="text-black text-4xl">
         <h1>Hooooooome page</h1>
-        <PostCard/>
+        
+        <PostCard :posts="posts"/>
     </div>
 </template>
 
