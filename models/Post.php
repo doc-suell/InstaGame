@@ -1,15 +1,15 @@
 <?php
 
-include_once "./config/database.php";
+include_once "../config/database.php";
 
 class Post {
     private ?int $id;
     private int $userId;
     private string $description;
     private string $postPicture;
-    private string $publicationDate;
+    private ?string $publicationDate;
 
-    public function __construct(?int $id, int $userId, string $description, string $postPicture, string $publicationDate) {
+    public function __construct(?int $id, int $userId, string $description, string $postPicture, ?string $publicationDate) {
         $this->id = $id;
         $this->userId = $userId;
         $this->description = $description;
@@ -36,13 +36,16 @@ class Post {
 
 
     // ADD POST FUNCTION
-    public  function addPost(Database $db){
-        $stmt = $db->getConnection()->prepare("INSERT INTO `posts`(`id`, `user_id`, `post_picture`, `description`, `created_at`) VALUES (NULL,1,:postPicture,:description,:publicationDate)");
-        $stmt->bindParam(":postPicture", $this->postPicture);
-        $stmt->bindParam(":postPicture", $this->description);
-        $stmt->bindParam(":postPicture", $this->publicationDate);
+    public  function addPost(Post $post, Database $db){
+        $stmt = $db->getConnection()->prepare("INSERT INTO `posts`(`user_id`, `post_picture`, `description`) VALUES (:userId,:postPicture,:description)");
+        $userId = $post->getUserId();
+        $postPicture = $post->getPostPicture();
+        $description = $post->getDescription();
         
-        return $stmt->execute();
+        $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':postPicture', $postPicture);
+        $stmt->bindParam(':description', $description);
+        $stmt->execute();
     }
 
     // EDIT POST FUNCTION
