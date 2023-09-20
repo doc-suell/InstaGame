@@ -2,6 +2,7 @@
 <script setup>
 
 import SearchBar from './SearchBar.vue';
+import CreatPostModal from './CreatPostModal.vue';
 
 </script>
 
@@ -76,6 +77,9 @@ import SearchBar from './SearchBar.vue';
     <!-- SEARCH BAR -->
     <SearchBar />  
     <!-- END SEARCH BAR -->
+    <!-- ADD POSTE MODAL  -->
+    <CreatPostModal />
+    <!-- END ADD POSTE MODAL  -->
 </template>
 
 

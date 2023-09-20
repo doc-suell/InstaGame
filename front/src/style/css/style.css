@@ -186,10 +186,6 @@ nav{
 
   /* -----------------  LOGIN-FORM -----------------  */
 .container-all-forms{
-  /* background-image: url(../../../public/assets/images/wallhaven-57oke1.jpg);
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat; */
   margin: auto;
   width: 100%;
   min-height: 100vh;
@@ -401,10 +397,74 @@ input[type=file]::file-selector-button:hover {
   width: 100%;
   font-size: 13px;
 }
-
-
-
 /* -----------------  END CARD POST -----------------  */
+
+/* -----------------  ADD MODAL POST -----------------  */
+
+#post-container{
+  /* display: none; */
+}
+
+.post-container{
+  background-color: rgba(0,0,0,0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container-post{
+  border: double 1px transparent;
+  background-image: linear-gradient(white, white), linear-gradient(to right, rgba(63,94,251,1), rgba(242,72,72,1));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border-radius: 10px;
+  width: 450px;
+  overflow: hidden;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-form{
+  margin: 0px 20px;
+  max-width: 600px;
+  min-height: 500px;
+  background-color: #fff;
+}
+.post-header{
+  width: 120%;
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: double 1px transparent;
+  background-image: linear-gradient(white, white), linear-gradient(to right, rgba(63,94,251,1), rgba(242,72,72,1));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+
+.post-form>textarea{
+  width: 100%;
+  height: 200px;
+  outline: none;
+  padding: 20px;
+}
+
+
+
+
+
+
+
+/* -----------------   END MODAL POST -----------------  */
+
+
 
 
 
