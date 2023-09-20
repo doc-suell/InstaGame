@@ -9,7 +9,7 @@
 
 👾souhail naji :
 
-- CRUD Post.php + card styling  + comment popup + (Post card)
+- CRUD Post.php + card styling  + >>>>>comment popup<<<<< + (Post card)
 
 🤖Jonathan :
 
