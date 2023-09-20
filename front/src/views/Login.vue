@@ -11,9 +11,11 @@
             <form class="form-items" action="" method="post">
                 <h2 class="login-h2">LOGIN</h2>
                 <div class="input">
+                    <span class="test"><i class="fa-solid fa-user"></i></span>
                     <input  type="text-login" name="username" placeholder="Type your Username">
                 </div>
                 <div class="input">
+                    <span class="test"><i class="fa-solid fa-fingerprint"></i></span>
                     <input type="password" name="password" placeholder="Type your Password">
                 </div>
                 <button class="button" type="submit">LOGIN</button>

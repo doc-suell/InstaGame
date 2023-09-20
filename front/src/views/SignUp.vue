@@ -4,13 +4,16 @@
             <form class="form-items" @submit.prevent="submitForm">
                 <h2>SIGN UP</h2>
                 <div class="input">
+                    <span class="test"><i class="fa-solid fa-user"></i></span>
                     <input v-model="formData.username" class="" type="text" name="username" placeholder="Type your Username">
                 </div>
                 <div class="input">
+                    <span class="test"><i class="fa-solid fa-at"></i></span>
                     <input v-model="formData.email" class="" type="text" name="email"
                     placeholder="Type your Email">
                 </div>  
                 <div class="input">
+                    <span class="test"><i class="fa-solid fa-fingerprint"></i></span>
                     <input v-model="formData.password" class="" type="password" name="password"
                         placeholder="Type your Password">
                 </div> 
@@ -22,7 +25,6 @@
         </div>
     </div>
 </template>
-  
 <script>
 
 import axios from 'axios';

@@ -1,8 +1,8 @@
 <script>
 
 import axios from 'axios';
-import PostCard from "../components/PostCard.vue";
 import NavBar from "../components/NavBar.vue";
+import PostCard from "../components/PostCard.vue";
 
 
 
@@ -29,8 +29,9 @@ export default {
             });
     },
     components: {
-        PostCard,
         NavBar,
+        PostCard,
+
     }
 };
 
@@ -38,12 +39,8 @@ export default {
 </script>
 
 <template>
-    <div class="text-black text-4xl">
-        <h1>Hooooooome page</h1>
-        
-        <PostCard :posts="posts"/>
-        <NavBar/>
-    </div>
+    <NavBar/>
+    <PostCard :posts="posts"/>
 </template>
 
 <style></style>

@@ -1,3 +1,18 @@
+<script>
+import Comment from "./Comment.vue";
+
+export default {
+  name: "PostCard",
+  props: {
+    posts: Array,
+  },
+  components: { Comment },
+};
+</script>
+
+
+
+
 <template>
   <div>
     <div class="card max-w-[35%] mx-auto" v-for="post in posts" :key="post.id">
@@ -36,14 +51,3 @@
   </div>
 </template>
 
-<script>
-import Comment from "./Comment.vue";
-
-export default {
-  name: "PostCard",
-  props: {
-    posts: Array,
-  },
-  components: { Comment },
-};
-</script>

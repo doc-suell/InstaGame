@@ -1,8 +1,6 @@
 
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Nunito+Sans:opsz@6..12&display=swap');
-
-
 :root {
     --primary-color: #238BCF;  
     --secondary-color: #eceaec; 
@@ -17,15 +15,30 @@
     --font-logos-text: 18px;
     --font-logos-links: 20px;
   }
-
+  /* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #bf6de0 #ffffff;
+}
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #bf6de0;
+  border-radius: 15px;
+  border: 6px none #ffffff;
+}
 
   /* -----------------HEADER-----------------  */
-
   body{
     font-family: 'Nunito Sans', sans-serif;
     /* background: var(--gradient-color); */
   }
-
 nav{
   height: 100%;
   width: 70px;
@@ -39,38 +52,29 @@ nav{
   align-items: center;
   padding: 20px 0px;
 }
-
 .navigation{
     display: flex;
     flex-direction: column;
     align-items: center ;
 }
-
 .u-navigation{
   display: flex;
   flex-direction: column;
   align-items: center ;
   padding-top: 90px;
 }
-
 .nav-item{
   padding: 15px;
   margin: 10px 0;
 }
-
 .nav-item:hover{
   background-color: rgba(133, 133, 133, 0.38);
   border-radius: 7px;
   transition: background-color 0.5s ease 0s;
 }
-
-
-
 .link-item path {
   fill: var(--secondary-color);
 }
-
-
 .pic-profile-nav{
   cursor: pointer;
   width: 40px;
@@ -79,8 +83,6 @@ nav{
   border-radius: 50%;
   overflow: hidden;
 }
-
-
 .modal{
   position: absolute;
   background-color: var(--sideBar-color);
@@ -92,11 +94,9 @@ nav{
   left: 80px;
   overflow: hidden;
 }
-
-.hiden{
+.hidden{
   display: none;
 }
-
 .modal>ul{
   height: 100%;
   width: 100%;
@@ -104,8 +104,6 @@ nav{
   flex-direction: column;
   align-items: center;
 }
-
-
 .link-modal{
   padding-top: 5px;
   width: 100%;
@@ -116,26 +114,16 @@ nav{
   justify-content: center;
   align-items: center;
 }
-
 .modal>ul>li>a{
   margin-left: 12px;
 }
-
-
 .link-modal path{
   fill: white ;
 }
-
-
 .link-modal:hover{
   background: var(--gradient-color);
   transition: background 1s ease 0s;
 }
-
-
-
-
-
 @media screen and (max-width: 500px) {
   nav {
     top: auto;
@@ -148,11 +136,9 @@ nav{
     flex-direction: row;
     padding: 0 20px;
   }
-
   .logo{
     display: none;
   }
-
   .u-navigation{
     display: flex;
     flex-direction: row;
@@ -167,18 +153,9 @@ nav{
     right: 10px;
     left: auto;
   }
-
 }
-
-
-
  /* ------------------------------------- END HEADER-------------------------------------  */
-
-
-
-
  /* -----------------  SEARCH-FORM -----------------  */
-
 .search-bar{
   width: 100%;
   padding: 20px 0px;
@@ -189,14 +166,10 @@ nav{
   
 
 }
-
-
 .form{
   width: 70%;
   margin: auto;
 }
-
-
 .search-input{
   width: 100%;
   height: 40px;
@@ -208,19 +181,10 @@ nav{
                     linear-gradient(to right, rgba(63,94,251,1), rgba(242,72,72,1));
   background-origin: border-box;
   background-clip: padding-box, border-box;
-  
-  
 }
-
-
  /* ------------------------------------- END SEARCH-FORM -------------------------------------  */
 
-
-
-
   /* -----------------  LOGIN-FORM -----------------  */
-
-
 .container-all-forms{
   /* background-image: url(../../../public/assets/images/wallhaven-57oke1.jpg);
   background-position: center center;
@@ -235,7 +199,6 @@ nav{
   align-items: center;
   padding: 15px;
 }
-
 .form-container{
   border: double 1px transparent;
   background-image: linear-gradient(white, white), linear-gradient(to right, rgba(63,94,251,1), rgba(242,72,72,1));
@@ -250,7 +213,6 @@ nav{
   flex-direction: column;
   align-items: center;
 }
-
 .form-items{
   width: 100%;
   display: flex;
@@ -258,23 +220,30 @@ nav{
   flex-direction: column;
   align-items: center;
 }
-
-
 .form-items>h2{
   font-size: 40px;
   line-height: 1.2;
   padding-bottom: 50px;
 }
-
 /******** //inputs ********/
-
 .input{
   width: 100%;
   border-bottom: 1px solid var(--secondary-hover-btn);
   margin-bottom: 23px;
   display: inline-block;
+  position: relative;
 }
 
+
+.test{
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+}
+
+.test>i{
+  color: var(--secondary-hover-btn);
+}
 .input::after{
   content: '';
     display: block;
@@ -283,13 +252,9 @@ nav{
     background: var(--secondary-hard-color);
     transition: width .3s;
 }
-
 .input:hover::after{
   width: 100%;
 }
-
-
-
 .input>input{
   font-size: 16px;
   line-height: 1.2;
@@ -298,9 +263,7 @@ nav{
   padding: 0 7px 0 43px;
   outline: none;
 }
-
 /******** BUTTON  ********/
-
 .button{
   line-height: 1.2;
   text-transform: uppercase;
@@ -314,37 +277,27 @@ nav{
   -o-transition: all .4s ease-in-out;
   -webkit-transition: all .4s ease-in-out;
   transition: all .4s ease-in-out;
-  
 }
-
 .button{
   background-image: linear-gradient(to right, #3f5efb, #f24848, #6B8DD6, #f24848);
   box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
 }
-
 .button:hover {
   background-position: 100% 0;
 }
-
 .form-items>a{
   color: var(--secondary-hard-color);
   padding: 20px 0 0 0;
 }
-
-
 .form-container>a{
   color: var(--secondary-hard-color);
   font-size: 15px;
   line-height: 1.2;
   padding: 54px 0 20px 0;
 }
-
-
     /* -----------------  END LOGIN-FORM -----------------  */
 
-
 /* -----------------   CREATE ACCOUNT FROM -----------------  */
-
 .input-file{
   display: flex;
   justify-content: center;
@@ -359,18 +312,15 @@ nav{
   cursor: pointer;
   border-radius: 35px;
 }
-
 .input-file:hover{
   background: var(--secondary-hover-color);
 }
-
 
 input[type=file]{
   width: 100%;
   padding: 10px;
   border-radius: 35px;
 }
-
 input[type=file]::file-selector-button{
   outline: none;
   border: none;
@@ -388,14 +338,6 @@ input[type=file]::file-selector-button{
 input[type=file]::file-selector-button:hover {
   background-position: 100% 0;
 }
-
-
-
-
-
-
-
-
 
 
 
