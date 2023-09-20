@@ -1,16 +1,25 @@
 <template>
-    <div>
-        <h1 class="text-center">SignUp Page</h1>
-        <form class="flex flex-col align-center" @submit.prevent="submitForm">
-            <input v-model="formData.username" class="border border-black w-[30%] mx-auto" type="text" name="username"
-                placeholder="username">
-            <input v-model="formData.email" class="border border-black w-[30%] mx-auto" type="text" name="email"
-                placeholder="email">
-            <input v-model="formData.password" class="border border-black w-[30%] mx-auto" type="password" name="password"
-                placeholder="password">
-            <button class="border border-black w-[30%] mx-auto" type="submit">Go</button>
-        </form>
-    
+    <div class="container-all-forms">
+        <div class="form-container">
+            <form class="form-items" @submit.prevent="submitForm">
+                <h2>SIGN UP</h2>
+                <div class="input">
+                    <input v-model="formData.username" class="" type="text" name="username" placeholder="Type your Username">
+                </div>
+                <div class="input">
+                    <input v-model="formData.email" class="" type="text" name="email"
+                    placeholder="Type your Email">
+                </div>  
+                <div class="input">
+                    <input v-model="formData.password" class="" type="password" name="password"
+                        placeholder="Type your Password">
+                </div> 
+                <label class="input-file" for="file">
+                        <input type="file" name="file" id="file">
+                </label>
+                <button class="button" type="submit" >Sign Up</button>
+            </form>
+        </div>
     </div>
 </template>
   

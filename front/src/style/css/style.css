@@ -7,12 +7,13 @@
     --primary-color: #238BCF;  
     --secondary-color: #eceaec; 
     --secondary-hover-color: #F2F2F2; 
+    --secondary-hover-btn: #cbcbcb; 
     --secondary-hard-color: #B1B1B1; 
     --background-color: #FAFAFA; 
     --text-color: #232323;  
     --sideBar-color: #0e0e0e;  
     --icons-color: white;  
-    --gradient-color: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(242,72,72,1) 100%);
+    --gradient-color: linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(242,72,72,1) 100%);
     --font-logos-text: 18px;
     --font-logos-links: 20px;
   }
@@ -171,7 +172,7 @@ nav{
 
 
 
- /* ----------------- END HEADER-----------------  */
+ /* ------------------------------------- END HEADER-------------------------------------  */
 
 
 
@@ -182,8 +183,7 @@ nav{
   width: 100%;
   padding: 20px 0px;
   border-bottom: double 1px transparent;
-  background-image: linear-gradient(white, white), 
-                    linear-gradient(to right, rgba(63,94,251,1), rgba(242,72,72,1));
+  background-image: linear-gradient(white, white), linear-gradient(to right, rgba(63,94,251,1), rgba(242,72,72,1));
   background-origin: border-box;
   background-clip: padding-box, border-box;
   
@@ -213,6 +213,194 @@ nav{
 }
 
 
- /* ----------------- END SEARCH-FORM -----------------  */
+ /* ------------------------------------- END SEARCH-FORM -------------------------------------  */
+
+
+
+
+  /* -----------------  LOGIN-FORM -----------------  */
+
+
+.container-all-forms{
+  /* background-image: url(../../../public/assets/images/wallhaven-57oke1.jpg);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat; */
+  margin: auto;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.form-container{
+  border: double 1px transparent;
+  background-image: linear-gradient(white, white), linear-gradient(to right, rgba(63,94,251,1), rgba(242,72,72,1));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border-radius: 10px;
+  width: 450px;
+  overflow: hidden;
+  padding: 60px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-items{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.form-items>h2{
+  font-size: 40px;
+  line-height: 1.2;
+  padding-bottom: 50px;
+}
+
+/******** //inputs ********/
+
+.input{
+  width: 100%;
+  border-bottom: 1px solid var(--secondary-hover-btn);
+  margin-bottom: 23px;
+  display: inline-block;
+}
+
+.input::after{
+  content: '';
+    display: block;
+    width: 0;
+    height: 1px;
+    background: var(--secondary-hard-color);
+    transition: width .3s;
+}
+
+.input:hover::after{
+  width: 100%;
+}
+
+
+
+.input>input{
+  font-size: 16px;
+  line-height: 1.2;
+  width: 100%;
+  height: 55px;
+  padding: 0 7px 0 43px;
+  outline: none;
+}
+
+/******** BUTTON  ********/
+
+.button{
+  line-height: 1.2;
+  text-transform: uppercase;
+  padding: 0 20px;
+  width: 100%;
+  height: 50px;
+  border-radius: 35px;
+  color: var(--background-color);
+  background-size: 300% 100%;
+  -moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+  
+}
+
+.button{
+  background-image: linear-gradient(to right, #3f5efb, #f24848, #6B8DD6, #f24848);
+  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+}
+
+.button:hover {
+  background-position: 100% 0;
+}
+
+.form-items>a{
+  color: var(--secondary-hard-color);
+  padding: 20px 0 0 0;
+}
+
+
+.form-container>a{
+  color: var(--secondary-hard-color);
+  font-size: 15px;
+  line-height: 1.2;
+  padding: 54px 0 20px 0;
+}
+
+
+    /* -----------------  END LOGIN-FORM -----------------  */
+
+
+/* -----------------   CREATE ACCOUNT FROM -----------------  */
+
+.input-file{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin: 30px 0 30px 0;
+  border: 2px dashed var(--secondary-hover-btn);
+  height: 150px;
+  padding: 20px;
+  cursor: pointer;
+  border-radius: 35px;
+}
+
+.input-file:hover{
+  background: var(--secondary-hover-color);
+}
+
+
+input[type=file]{
+  width: 100%;
+  padding: 10px;
+  border-radius: 35px;
+}
+
+input[type=file]::file-selector-button{
+  outline: none;
+  border: none;
+  border-radius: 35px;
+  padding: 5px 10px;
+  color: var(--background-color);
+  background-size: 300% 100%;
+  -moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+  background-image: linear-gradient(to right, #3f5efb, #f24848, #6B8DD6, #f24848);
+}
+
+input[type=file]::file-selector-button:hover {
+  background-position: 100% 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* -----------------  END CREATE ACCOUNT FROM -----------------  */
+
+
 
 

@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import PostCard from "../components/PostCard.vue";
+import NavBar from "../components/NavBar.vue";
 
 
 
@@ -29,6 +30,7 @@ export default {
     },
     components: {
         PostCard,
+        NavBar,
     }
 };
 
@@ -40,6 +42,7 @@ export default {
         <h1>Hooooooome page</h1>
         
         <PostCard :posts="posts"/>
+        <NavBar/>
     </div>
 </template>
 
