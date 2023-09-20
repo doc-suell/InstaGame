@@ -11,42 +11,42 @@ export default {
 </script>
 
 
+<!-- <template>
+  <div>
+    <div class="card max-w-[35%] mx-auto" v-for="post in posts" :key="post.id">
+          <p class="text-xl text-black">{{ post.description }}</p>
+          <p class="text-xl text-black">{{ post.username }}</p>
+    </div>
+  </div>
+</template> -->
+
 
 
 <template>
-  <div>
-    <div class="card max-w-[35%] mx-auto" v-for="post in posts" :key="post.id">
-      <div class="flex justify-between p-3">
-        <div class="flex flex-col">
-          <div class="pic-profile-card mr-3">
-            <img src="/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="profile-pic" />
+  <div class="container">
+    <div class="cards">
+      <!-- SINGLE CARD :// -->
+      <div class="card-items">
+        <div class="card-header">
+          <div class="pic-profile-nav"><img src="../../public/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="profile-pic"></div>
+          <span><i class="fa-solid fa-ellipsis"></i></span>
+        </div>
+        <div class="card-body">
+          <img src="../../public/assets/images/test.jpeg" alt="post-pic">
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-icons">
+            <i class="fa-regular fa-heart"></i>
+            <i class="fa-regular fa-comment"></i>
           </div>
-          <p class="text-xl text-black">{{ post.description }}</p>
-          <p class="text-xl text-black">{{ post.username }}</p>
+          <span class="card-footer-icons"><i class="fa-regular fa-bookmark"></i></span>
         </div>
-        <div>
-          <button>
-            <i class="fa-solid fa-bars"></i>
-          </button>
+        <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, consequatur!</p>
+        <div class="comment">
+          <Comment />
         </div>
       </div>
-      <img
-        class="rounded-[6px] h-[400px] w-[468px]"
-        :src="post.post_picture"
-        alt="post picture"
-      />
-      <div class="flex justify-around pb-6">
-        <button class="cardButton p-2">
-          <i class="fa-regular fa-heart"></i>
-        </button>
-        <button class="cardButton p-2">
-          <i class="fa-regular fa-comment"></i>
-        </button>
-        <button class="cardButton p-2">
-          <i class="fa-solid fa-download"></i>
-        </button>
-      </div>
-      <Comment />
+      <!-- END SINGLE CARD :// -->
     </div>
   </div>
 </template>

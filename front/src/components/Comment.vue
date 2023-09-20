@@ -4,8 +4,8 @@
 
 
 <template>
-    <div class="text-black text-4xl">
-        Comments Page
+    <div class="comment-input">
+        <input type="text" name="comment" id="comment" placeholder="Add your comment...">
     </div>
 </template>
 
