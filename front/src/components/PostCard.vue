@@ -20,8 +20,6 @@ export default {
   </div>
 </template> -->
 
-
-
 <template>
   <div class="container">
     <div class="cards">
@@ -71,5 +69,6 @@ export default {
       <!-- END SINGLE CARD :// -->
     </div>
   </div>
+  
 </template>
 

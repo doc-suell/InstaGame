@@ -15,25 +15,39 @@ if(isset($_REQUEST['action'])){
     $action = $_REQUEST['action'];
 
     if($action == "addPost" && $_SERVER['REQUEST_METHOD'] === 'POST'){
-        $postPicture = $_POST['postPicture'];
+        $postPicture = $_FILES['file']; 
         $description = $_POST['description'];
-        $user_id =  $_POST['user_id'];
 
-        $post = new Post(null, $user_id, $description, $postPicture, null);
-        $post->addPost($post, $db);
+        if($postPicture['error'] === UPLOAD_ERR_OK){
+            $uploadDir = "../images/";
+            $uploadPath = $uploadDir . $postPicture['name'];
 
-        // Réponse JSON de succès (ou tout autre message)
-        echo json_encode(["message" => "Post ajouté avec succès"]);
+            if(move_uploaded_file($postPicture['tmp_name'], $uploadPath)){
+                $postPicturePath = "images/" . $postPicture['name'];
+                $description = htmlspecialchars($description);
+
+                $post = new Post(null, 1, $description, $postPicturePath, null);
+                $post->addPost($post, $db);
+
+                echo json_encode(["message" => "Post successfully created"]);
+            } else {
+                echo json_encode(["message" => "Error creating post while uploading"]);
+            }
+        } else {
+            echo json_encode(["message" => "Error uploading post"]);
+        }
     } elseif ($action == "getPosts" && $_SERVER['REQUEST_METHOD'] === 'GET') {
         $posts = Post::showPosts($db);
-        // Répondez avec les données au format JSON
         header('Content-Type: application/json');
         echo json_encode($posts);
         exit;
     } else {
-        echo json_encode(["message" => "Action non reconnue"]);
+        echo json_encode(["message" => "Action not allowed"]);
     }
 } else {
-    echo json_encode(["message" => "Aucune action spécifiée"]);
+    echo json_encode(["message" => "Empty Action Request"]);
 }
 ?>
+
+
+
