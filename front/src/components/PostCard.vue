@@ -7,22 +7,21 @@ export default {
     posts: Array,
   },
   components: { Comment },
+  created() {
+    this.posts.forEach(post => {
+      console.log("here PIC",post.postPicturePath);
+      console.log("here description",post.description);
+    });
+  },
 };
 </script>
 
 
-<!-- <template>
-  <div>
-    <div class="card max-w-[35%] mx-auto" v-for="post in posts" :key="post.id">
-          <p class="text-xl text-black">{{ post.description }}</p>
-          <p class="text-xl text-black">{{ post.username }}</p>
-    </div>
-  </div>
-</template> -->
-
 <template>
+  
   <div class="container">
-    <div class="cards">
+    
+    <div class="cards" v-for="post in posts" :key="post.id">
       <!-- SINGLE CARD :// -->
       <div class="card-items">
         <div class="card-header">
@@ -30,7 +29,7 @@ export default {
           <span><i class="fa-solid fa-ellipsis"></i></span>
         </div>
         <div class="card-body">
-          <img src="/assets/images/test.jpeg" alt="post-pic">
+          <img :src="post.post_picture"  alt="post-pic">
         </div>
         <div class="card-footer">
           <div class="card-footer-icons">
@@ -39,36 +38,16 @@ export default {
           </div>
           <span class="card-footer-icons"><i class="fa-regular fa-bookmark"></i></span>
         </div>
-        <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, consequatur!</p>
+        <p class="description">{{ post.description }}</p>
         <div class="comment">
-          <Comment />
-        </div>
-      </div>
-      <!-- END SINGLE CARD :// -->
-      <!-- SINGLE CARD :// -->
-      <div class="card-items">
-        <div class="card-header">
-          <div class="pic-profile-nav"><img src="../../public/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="profile-pic"></div>
-          <span><i class="fa-solid fa-ellipsis"></i></span>
-        </div>
-        <div class="card-body">
-          <img src="../../public/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="post-pic">
-        </div>
-        <div class="card-footer">
-          <div class="card-footer-icons">
-            <i class="fa-regular fa-heart"></i>
-            <i class="fa-regular fa-comment"></i>
-          </div>
-          <span class="card-footer-icons"><i class="fa-regular fa-bookmark"></i></span>
-        </div>
-        <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, consequatur!</p>
-        <div class="comment">
+          
           <Comment />
         </div>
       </div>
       <!-- END SINGLE CARD :// -->
     </div>
   </div>
+
   
 </template>
 

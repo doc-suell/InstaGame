@@ -85,7 +85,7 @@ nav{
   overflow: hidden;
 }
 .modal{
-  position: absolute;
+  position: fixed;
   background-color: var(--sideBar-color);
   color: white;
   border-radius: 10px;

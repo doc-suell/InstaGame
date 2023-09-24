@@ -20,7 +20,7 @@ class Post {
 
     // SHOW ALL POSTS FUNCTION
     public static function showPosts(Database $db){
-        $stmt = $db->getConnection()->query("SELECT posts.*, users.username FROM posts INNER JOIN users ON posts.user_id = users.id");
+        $stmt = $db->getConnection()->query("SELECT posts.*, users.username FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY created_at DESC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

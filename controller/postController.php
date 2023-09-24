@@ -23,7 +23,7 @@ if(isset($_REQUEST['action'])){
             $uploadPath = $uploadDir . $postPicture['name'];
 
             if(move_uploaded_file($postPicture['tmp_name'], $uploadPath)){
-                $postPicturePath = "images/" . $postPicture['name'];
+                $postPicturePath = "http://localhost/instaGame/images/" . $postPicture['name'];
                 $description = htmlspecialchars($description);
 
                 $post = new Post(null, 1, $description, $postPicturePath, null);
@@ -48,6 +48,3 @@ if(isset($_REQUEST['action'])){
     echo json_encode(["message" => "Empty Action Request"]);
 }
 ?>
-
-
-

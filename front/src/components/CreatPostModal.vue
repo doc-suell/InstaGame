@@ -20,7 +20,7 @@ const submitForm = async () => {
     });
     console.log("Server Response", response.data);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 };
 
