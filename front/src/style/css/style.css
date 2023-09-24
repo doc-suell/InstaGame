@@ -51,6 +51,7 @@ nav{
   justify-content: space-between;
   align-items: center;
   padding: 20px 0px;
+  z-index: 1000;
 }
 .navigation{
     display: flex;
@@ -356,10 +357,17 @@ input[type=file]::file-selector-button:hover {
   border-bottom: 1px solid var(--secondary-hard-color);
 }
 .card-header{
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 10px;
+}
+
+.user-name{
+  position: absolute;
+  left: 50px;
+  font-size: 14px;
 }
 /* BODY  */
 .card-body{

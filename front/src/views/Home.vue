@@ -5,6 +5,11 @@ import NavBar from "../components/NavBar.vue";
 import PostCard from "../components/PostCard.vue";
 
 export default {
+    methods: {
+        handlePostDeleted(deletedPostId) {
+            this.posts = this.posts.filter(post => post.id !== deletedPostId);
+        },
+    },
     data() {
         return {
             posts: [], 
@@ -37,7 +42,7 @@ export default {
 
 <template>
     <NavBar/>
-    <PostCard :posts="posts"/>
+    <PostCard @postDeleted="handlePostDeleted" :posts="posts"/>
 </template>
 
 <style></style>

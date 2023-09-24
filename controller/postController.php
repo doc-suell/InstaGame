@@ -47,4 +47,21 @@ if(isset($_REQUEST['action'])){
 } else {
     echo json_encode(["message" => "Empty Action Request"]);
 }
+
+
+// DELETE POST 
+
+if(isset($_REQUEST['action'])){
+    $action = $_REQUEST['action'];
+    if ($action == "deletePost" && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
+        $postId = $_GET['id'];
+        $success = Post::deletePost($postId, $db);
+        if ($success) {
+            echo json_encode(["message" => "Post successfully deleted"]);
+        } else {
+            echo json_encode(["message" => "Error deleting post"]);
+        }
+        exit;
+    }
+}
 ?>

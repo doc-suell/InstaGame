@@ -60,7 +60,7 @@ class Post {
     }
 
     // DELETE POST FUNCTION
-    public static function deletePost(Database $db, $postId){
+    public static function deletePost($postId, Database $db){
         $stmt = $db->getConnection()->prepare("DELETE FROM `posts` WHERE id = :id");
         $stmt->bindParam(":id", $postId);
         return $stmt->execute();
