@@ -164,44 +164,6 @@
       </form>
     </div>
   </template>
-  
-  <script>
-  import axios from "axios";
-  
-  export default {
-    data() {
-      return {
-        formData: {
-          action: "addMember",
-          username: "",
-          email: "",
-          password: "",
-        },
-      };
-    },
-    methods: {
-      async submitForm() {
-        {
-          try {
-            const response = await axios.post(
-              "http://localhost/instaGame/controller/memberController.php?action=addMember",
-              this.formData,
-              {
-                headers: {
-                  "Content-Type": "application/x-www-form-urlencoded",
-                },
-              }
-            );
-            console.log("fffffffff", response.data);
-          } catch (error) {
-            console.error(error);
-          }
-        }
-      },
-    },
-  };
-  </script>
-  
   <style>
   .highlight-animation {
     animation: highlight 2s alternate infinite;
