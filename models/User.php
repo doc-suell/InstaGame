@@ -33,6 +33,11 @@ class User
         $stmt = $db->getConnection()->query("SELECT * FROM users WHERE id = $id");
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public static function login($username, $password, Database $db)
+    {
+        $stmt = $db->getConnection()->query("SELECT * FROM users WHERE username = '$username' AND password = '$password'");
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
     public static function getsByUsername(string $username, Database $db)
     {
