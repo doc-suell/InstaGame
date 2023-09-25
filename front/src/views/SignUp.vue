@@ -1,38 +1,4 @@
-        <script>
-        
-        import axios from 'axios';
-        
-        export default {
-            data() {
-                return {
-                    formData: {
-                        action: "addMember",
-                        username: "",
-                        email: "",
-                        password: "",
-                    }
-                };
-            },
-            methods: {
-                async submitForm() {
-        
-                    {
-                        try {
-                            const response = await axios.post('http://localhost/instaGame/controller/memberController.php?action=addMember', this.formData, {
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                            });
-                            console.log("test",response.data);
-                        } catch (error) {
-                            console.error(error);
-                        }
-                    }
-        
-                }
-            }
-        };
-        </script>
+
 <template>
   <div class="flex justify-center items-center h-screen">
     <form class="form-container flex flex-col p-16 " @submit.prevent="submitForm">
