@@ -43,7 +43,7 @@
           />
         </div>
         <p v-if="usernameError" class="text-red-500 mb-2">
-          Ce nom d'utilisateur existe déjà.
+          This username already exists.
         </p>
         <div class="input">
           <span class="test"><i class="fa-solid fa-at"></i></span>
@@ -56,7 +56,7 @@
           />
         </div>
         <p v-if="emailError" class="text-red-500">
-          Cette adresse email existe déjà.
+          This email address already exists.
         </p>
         <div class="input">
           <span class="test"><i class="fa-solid fa-fingerprint"></i></span>
@@ -97,7 +97,7 @@
             class="cursor-pointer mt-3 w-56 rounded-xl text-white p-2 custom-green-button transform hover:scale-105 transition-all duration-300 ease-in-out"
             @click="redirectToLogin"
           >
-            Connectez-vous maintenant
+          Log in now.
           </button>
           <svg
             class="checkmark"
