@@ -64,8 +64,7 @@
           <router-link to="/signup">No account yet ? Sign up now !</router-link>
         </div>
         <p v-if="loginError" class="text-red-500 mt-2 mx-auto">
-          Il semblerait que votre nom d'utilisateur ou votre mot de passe ne
-          soient pas corrects.
+            It seems that your username or password is incorrect.
         </p>
       </div>
     </form>

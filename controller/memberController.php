@@ -37,18 +37,18 @@ if(isset($_POST['action'])){
         echo json_encode(["message" => "Utilisateur ajouté avec succès"]);
     } else if ($_POST['action'] == "login") {
         $db = new Database();
-    
+
         $username = $_POST['username'];
         $password = $_POST['password'];
         $userId = User::login($username, $password, $db);
-    
-        if ($userId !== false) {
-            $_SESSION['id'] = $userId; // Enregistrez l'ID de l'utilisateur dans la session
-            $_SESSION['user'] = $username;
-            echo json_encode(["id" => $userId, "message" => "Utilisateur connecté avec succès"]);
-        } else {
-            echo json_encode(["message" => "L'authentification a échoué"]);
+
+    if ($userId !== false) {
+        $_SESSION['id'] = $userId; // Enregistrez l'ID de l'utilisateur dans la session
+        $_SESSION['user'] = $username;
+        echo json_encode(["id" => $userId, "message" => "Utilisateur connecté avec succès"]);
         }
+    } else {
+        echo json_encode(["message" => "Action non reconnue"]);
     }
 } else {
     echo json_encode(["message" => "Aucune action spécifiée"]);

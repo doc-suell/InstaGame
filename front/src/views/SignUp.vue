@@ -43,7 +43,7 @@
           />
         </div>
         <p v-if="usernameError" class="text-red-500 mb-2">
-          Ce nom d'utilisateur existe déjà.
+          This username already exists.
         </p>
         <div class="input">
           <span class="test"><i class="fa-solid fa-at"></i></span>
@@ -56,7 +56,7 @@
           />
         </div>
         <p v-if="emailError" class="text-red-500">
-          Cette adresse email existe déjà.
+          This email address already exists.
         </p>
         <div class="input">
           <span class="test"><i class="fa-solid fa-fingerprint"></i></span>
@@ -91,13 +91,33 @@
           >
             Create account
           </button>
+          <div v-else>
           <button
-            v-else
+
             class="cursor-pointer mt-3 w-56 rounded-xl text-white p-2 custom-green-button transform hover:scale-105 transition-all duration-300 ease-in-out"
             @click="redirectToLogin"
           >
-            Connectez-vous maintenant
+          Log in now.
           </button>
+          <svg
+            class="checkmark"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 52 52"
+          >
+            <circle
+              class="checkmark__circle"
+              cx="26"
+              cy="26"
+              r="25"
+              fill="none"
+            />
+            <path
+              class="checkmark__check"
+              fill="none"
+              d="M14.1 27.2l7.1 7.2 16.7-16.8"
+            />
+          </svg>
+        </div>
         </div>
         <div class="mt-2 cursor-pointer text-blue-500 mx-auto">
           <router-link to="/login"
@@ -128,9 +148,9 @@ export default {
   },
   methods: {
     redirectToLogin() {
-    // Rediriger vers la page de connexion
-    this.$router.push('/login');
-  },
+      // Rediriger vers la page de connexion
+      this.$router.push("/login");
+    },
     async submitForm() {
       if (
         !this.formData.username ||
@@ -178,7 +198,6 @@ export default {
         } catch (error) {
           console.error(error);
         }
-        
       }
     },
   },
@@ -248,7 +267,57 @@ export default {
   transition: transform 0.3s ease;
 }
 
+.checkmark {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: block;
+  margin-top: 4% !important;
+  margin: auto;
+  stroke-width: 2;
+  stroke: white;
+  stroke-miterlimit: 10;
+  box-shadow: inset 0px 0px 0px green;
+  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
 
+.checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: green;
+  fill: none;
+  animation: stroke .6s cubic-bezier(0.650, 0.000, 0.450, 1.000) forwards;
+}
+
+.checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke .3s cubic-bezier(0.650, 0.000, 0.450, 1.000) .8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 30px green;
+  }
+}
 
 .custom-button:hover {
   transform: scale(1.1);
