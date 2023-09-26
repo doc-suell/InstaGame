@@ -64,7 +64,7 @@
           <router-link to="/signup">No account yet ? Sign up now !</router-link>
         </div>
         <p v-if="loginError" class="text-red-500 mt-2 mx-auto">
-            It seems that your username or password is incorrect.
+          It seems that your username or password is incorrect.
         </p>
       </div>
     </form>
@@ -73,6 +73,14 @@
 
 <script>
 import axios from "axios";
+
+const instance = axios.create({
+  baseURL: "http://localhost/insta/instaGame/controller/",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+  },
+  withCredentials: true,
+});
 
 export default {
   data() {
@@ -83,6 +91,7 @@ export default {
         password: "",
       },
       loginError: false,
+
     };
   },
   methods: {
@@ -93,19 +102,23 @@ export default {
       }
 
       try {
-        const response = await axios.post(
-          "http://localhost/insta/instaGame/controller/memberController.php",
-          this.formData,
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          }
+        // const response = await axios.post(
+        //   "http://localhost/insta/instaGame/controller/memberController.php",
+        //   this.formData,
+        //   {
+        //     headers: {
+        //       "Content-Type": "application/x-www-form-urlencoded",
+        //     },
+        //   }
+        // );
+        const response = await instance.post(
+          "memberController.php",          
+          this.formData,          
         );
         if (response.data !== "") {
           this.$router.push("/");
           console.log("-------->", response.data);
-        }  else {
+        } else {
           this.loginError = true;
         }
       } catch (error) {

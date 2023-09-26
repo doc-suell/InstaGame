@@ -3,15 +3,17 @@
 session_start();
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: http://localhost:5173');
 header('Access-Control-Allow-Methods: GET , POST, PUT, DELETE, OPTIONS');
 header("Access-Control-Allow-Headers: X-Requested-With");
 header("Access-Control-Allow-Headers: Content-Type");
+header('Access-Control-Allow-Credentials: true');
+
 
 include_once "../models/User.php";
 
-if(isset($_POST['action'])){
-    if($_POST['action'] == "addMember"){
+if (isset($_POST['action'])) {
+    if ($_POST['action'] == "addMember") {
         $db = new Database();
 
         $username = $_POST['username'];
@@ -42,15 +44,19 @@ if(isset($_POST['action'])){
         $password = $_POST['password'];
         $userId = User::login($username, $password, $db);
 
-    if ($userId !== false) {
-        $_SESSION['id'] = $userId; // Enregistrez l'ID de l'utilisateur dans la session
-        $_SESSION['user'] = $username;
-        echo json_encode(["id" => $userId, "message" => "Utilisateur connecté avec succès"]);
+        if ($userId !== false) {
+            $_SESSION['id'] = $userId; // Enregistrez l'ID de l'utilisateur dans la session
+            $_SESSION['user'] = $username;
+            echo json_encode(["id" => $userId, "message" => "Utilisateur connecté avec succès"]);
         }
-    } else {
-        echo json_encode(["message" => "Action non reconnue"]);
+    } else if ($_POST['action'] == "checkConnection") {
+        if ($_SESSION['id'] == "") {
+            echo json_encode(["message" => "Session vide"]);
+        } else {
+            $userId = $_SESSION['id'];
+            echo json_encode(["id" => $userId, "message" => "Utilisateur connecté "]);
+        }
     }
 } else {
     echo json_encode(["message" => "Aucune action spécifiée"]);
 }
-?>
