@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 header('Content-Type: application/json');
@@ -16,18 +16,27 @@ if(isset($_REQUEST['action'])){
     $action = $_REQUEST['action'];
 
     if($action == "addPost" && $_SERVER['REQUEST_METHOD'] === 'POST'){
-        $postPicture = $_FILES['file']; 
+        $postPicture = $_FILES['file'];
         $description = $_POST['description'];
 
-        // PICTURE MASS
-        if ($postPicture['size'] > 500 * 1024) {
-            echo json_encode(["error" => "The image exceeds the maximum allowed size (100 KB)."]);
+        // FILE FILTER ONLY  (JPEG ou JPG)
+        $allowedExtensions = array("jpg", "jpeg");
+        $fileExtension = strtolower(pathinfo($postPicture['name'], PATHINFO_EXTENSION));
+        
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            echo json_encode(["error" => "Only JPEG or JPG files are allowed."]);
             exit;
         }
 
-        // CHARACTERS MAX 
+        // MAX file  (500 Ko)
+        if ($postPicture['size'] > 500 * 1024) {
+            echo json_encode(["error" => "The image exceeds the maximum allowed size (500 KB)."]);
+            exit;
+        }
+
+        // DESCRIPTION MAX CHARACTERS (200 caractères)
         if (strlen($description) > 200) {
-            echo json_encode(["error" => "The description must not exceed 100 characters."]);
+            echo json_encode(["error" => "The description must not exceed 200 characters."]);
             exit;
         }
 
@@ -61,7 +70,7 @@ if(isset($_REQUEST['action'])){
     echo json_encode(["error" => "Empty Action Request"]);
 }
 
-// DELETE POST 
+// SUPPRIMER LE POST
 
 if(isset($_REQUEST['action'])){
     $action = $_REQUEST['action'];

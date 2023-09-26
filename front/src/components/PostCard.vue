@@ -7,6 +7,11 @@ export default {
   props: {
     posts: Array,
   },
+  data() {
+    return {
+      showSmallModal: false,
+    };
+  },
   components: { Comment },
   methods: {
     async deletePost(postId) {
@@ -24,15 +29,25 @@ export default {
 <template>
   <div class="container">
     <div class="cards" v-for="post in posts" :key="post.id">
-      <button @click="deletePost(post.id)">suprimer</button>
       <!-- SINGLE CARD :// -->
       <div class="card-items">
         <div class="card-header">
+          <div class="small-modal-post"  v-if="showSmallModal" @click="showSmallModal = false">
+            <ul>
+              <button @click="deletePost(post.id)">
+                <span>Delete</span>
+                <i class="fa-regular fa-trash-can"></i></button>
+              <button>
+                <span>Edit</span>
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+            </ul>
+          </div>
           <div class="pic-profile-nav">
             <img src="/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="profile-pic">
           </div>
           <span class="user-name">{{ post.username }}</span>
-          <span><i class="fa-solid fa-ellipsis"></i></span>
+          <span @click="showSmallModal = true" class="open-small-modal-post"><i class="fa-solid fa-ellipsis"></i></span>
         </div>
         <div class="card-body">
           <img :src="post.post_picture" alt="post-pic">
@@ -53,3 +68,8 @@ export default {
     </div>
   </div>
 </template>
+
+
+<style>
+
+</style>

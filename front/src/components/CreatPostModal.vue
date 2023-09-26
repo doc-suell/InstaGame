@@ -4,6 +4,7 @@ import { ref, defineProps, withCtx } from 'vue';
 
 const { isOpen, closeModal } = defineProps(['isOpen', 'closeModal']);
 
+
 const formData = new FormData();
 const error = ref('');
 
@@ -27,6 +28,7 @@ const submitForm = async () => {
     } else {
       console.log("Server Response", response.data);
       closeModal(); 
+      window.location.reload();
     }
   } catch (error) {
     console.error(error);
