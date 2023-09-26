@@ -33,10 +33,34 @@ class User
         $stmt = $db->getConnection()->query("SELECT * FROM users WHERE id = $id");
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // public static function login($username, $password, Database $db)
+    // {
+    //     $stmt = $db->getConnection()->query("SELECT * FROM users WHERE username = '$username' AND password = '$password'");
+    //     return $stmt->fetch(PDO::FETCH_ASSOC);
+    // }
+
     public static function login($username, $password, Database $db)
     {
-        $stmt = $db->getConnection()->query("SELECT * FROM users WHERE username = '$username' AND password = '$password'");
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        // Préparez la requête SQL avec des paramètres liés
+        $stmt = $db->getConnection()->prepare("SELECT id FROM users WHERE username = :username AND password = :password");
+        
+        // Liez les valeurs aux paramètres
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+        
+        // Exécutez la requête
+        $stmt->execute();
+        
+        // Récupérez le résultat sous forme de tableau associatif
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($result) {
+            // Si l'authentification réussit, retournez l'ID de l'utilisateur
+            return $result['id'];
+        } else {
+            // Si l'authentification échoue, retournez false
+            return false;
+        }
     }
 
     public static function getsByUsername(string $username, Database $db)
@@ -68,6 +92,22 @@ class User
     {
         $stmt = $db->getConnection()->prepare('DELETE FROM users WHERE id = ?');
         $stmt->execute([$id]);
+    }
+
+    public static function usernameExists(string $username, Database $db) {
+        $stmt = $db->getConnection()->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
+        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+
+    public static function emailExists(string $email, Database $db) {
+        $stmt = $db->getConnection()->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
     }
 
 
