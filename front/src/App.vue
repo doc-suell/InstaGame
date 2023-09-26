@@ -1,19 +1,19 @@
 <script>
-// import Footer from '../src/components/Footer.vue';
-// import NavBar from '../src/components/NavBar.vue';
+import Footer from '../src/components/Footer.vue';
+import NavBar from '../src/components/NavBar.vue';
 
 
 
-// export default {
-//   name: 'App',
-//   setup() {
-//     return {
-//     }
+export default {
+  name: 'App',
+  setup() {
+    return {
+    }
 
-//   },
-//   components: { NavBar }
+  },
+  components: { NavBar, Footer }
 
-// }
+}
 
 </script>
 

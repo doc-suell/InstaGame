@@ -85,4 +85,24 @@ if(isset($_REQUEST['action'])){
         exit;
     }
 }
+
+
+
+// EDIT LE POST
+
+
+if(isset($_REQUEST['action'])) {
+    if ($action == "editPost" && $_SERVER['REQUEST_METHOD'] === 'PUT') {
+        $postId = $putData['id'];
+        $newDescription = $putData['new_description'];
+
+        $success = Post::updatePost($postId, $newDescription, $newImagePath, $db);
+        if ($success) {
+            echo json_encode(["message" => "Post successfully edited"]);
+        } else {
+            echo json_encode(["error" => "Error editing post"]);
+        }
+        exit;
+    }
+}
 ?>

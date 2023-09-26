@@ -75,7 +75,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost/insta/instaGame/controller/",
+  baseURL: "http://localhost/instaGame/controller/",
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",
   },

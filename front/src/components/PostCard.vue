@@ -1,27 +1,37 @@
 <script>
 import Comment from "./Comment.vue";
+import EditPostModal from "./EditPostModal.vue";
 import axios from 'axios'; 
+
+import { ref } from 'vue';
 
 export default {
   name: "PostCard",
   props: {
     posts: Array,
   },
+  components: { Comment , EditPostModal },
   data() {
     return {
-      showSmallModal: false,
+      isModalOpenEdit: false,
     };
   },
-  components: { Comment },
   methods: {
     async deletePost(postId) {
       try {
         await axios.delete(`http://localhost/instaGame/controller/postController.php?action=deletePost&id=${postId}`);
         this.$emit('postDeleted', postId);
+        this.$emit('openEditModal', postId);
       } catch (error) {
         console.error('Erreur lors de la suppression du post :', error);
       }
-    }
+    },
+    openModalEdit() {
+      this.isModalOpenEdit = true;
+    },
+    closeModalEdit() {
+      this.isModalOpenEdit = false;
+    },
   },
 };
 </script>
@@ -32,22 +42,30 @@ export default {
       <!-- SINGLE CARD :// -->
       <div class="card-items">
         <div class="card-header">
-          <div class="small-modal-post"  v-if="showSmallModal" @click="showSmallModal = false">
+          <!-- SMALL MODAL  -->
+          <div id="smallModal" class="small-modal-post">
+            <!-- <div class="overlay-small-modal"></div> -->
             <ul>
               <button @click="deletePost(post.id)">
                 <span>Delete</span>
                 <i class="fa-regular fa-trash-can"></i></button>
-              <button>
-                <span>Edit</span>
+              <button @click="openEditModal(post.id)">
+                <span>Edit Post</span>
                 <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+              <button>
+                <span>Cancel</span>
+                <i class="fa-solid fa-xmark"></i>
               </button>
             </ul>
           </div>
+          <!-- END SMALL MODAL  -->
           <div class="pic-profile-nav">
             <img src="/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="profile-pic">
           </div>
           <span class="user-name">{{ post.username }}</span>
-          <span @click="showSmallModal = true" class="open-small-modal-post"><i class="fa-solid fa-ellipsis"></i></span>
+          <!-- SMALL MODAL OPEN  -->
+          <span class="open-small-modal-post"><i class="fa-solid fa-ellipsis"></i></span>
         </div>
         <div class="card-body">
           <img :src="post.post_picture" alt="post-pic">
@@ -61,12 +79,14 @@ export default {
         </div>
         <p class="description">{{ post.description }}</p>
         <div class="comment">
-          <Comment />
+          <Comment /> 
         </div>
       </div>
       <!-- END SINGLE CARD :// -->
+      <EditPostModal :isOpenEdit="isModalOpenEdit" :closeModalEdit="closeModalEdit" />
     </div>
   </div>
+
 </template>
 
 

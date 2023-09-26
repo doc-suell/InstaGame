@@ -49,13 +49,12 @@ class Post {
     }
 
     // EDIT POST FUNCTION
-    public function updatePost(Database $db){
-        $stmt = $db->getConnection()->prepare("UPDATE `posts` SET `post_picture`='[value-3]',`description`='[value-4]',`created_at`='[value-5]' WHERE `posts`.`id` = :id");
-        $stmt->bindParam(":id", $this->id);
-        $stmt->bindParam(":postPicture", $this->postPicture);
-        $stmt->bindParam(":postPicture", $this->description);
-        $stmt->bindParam(":postPicture", $this->publicationDate);
-
+    public static function updatePost($postId, $postPicture, $description, Database $db){
+        $stmt = $db->getConnection()->prepare("UPDATE `posts` SET `post_picture` = :postPicture, `description` = :description WHERE `posts`.`id` = :id");
+        $stmt->bindParam(":id", $postId);
+        $stmt->bindParam(":postPicture", $postPicture);
+        $stmt->bindParam(":description", $description);
+    
         return $stmt->execute();
     }
 

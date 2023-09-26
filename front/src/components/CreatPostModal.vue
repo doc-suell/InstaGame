@@ -51,6 +51,7 @@ const handleImageUpload = (event) => {
 
 <template>
   <div class="post-container" v-if="isOpen">
+    <div @click="closeModal" class="overlay-small-modal"></div>
     <button @click="closeModal" class="close-modal-post-btn"><i class="fa-solid fa-x"></i></button>
     <div class="form-container-post">
       <div class="post-header"><h2>Create new post</h2></div>
