@@ -19,6 +19,18 @@ if(isset($_REQUEST['action'])){
         $postPicture = $_FILES['file']; 
         $description = $_POST['description'];
 
+        // PICTURE MASS
+        if ($postPicture['size'] > 500 * 1024) {
+            echo json_encode(["error" => "The image exceeds the maximum allowed size (100 KB)."]);
+            exit;
+        }
+
+        // CHARACTERS MAX 
+        if (strlen($description) > 200) {
+            echo json_encode(["error" => "The description must not exceed 100 characters."]);
+            exit;
+        }
+
         if($postPicture['error'] === UPLOAD_ERR_OK){
             $uploadDir = "../images/";
             $uploadPath = $uploadDir . $postPicture['name'];
@@ -32,10 +44,10 @@ if(isset($_REQUEST['action'])){
 
                 echo json_encode(["message" => "Post successfully created"]);
             } else {
-                echo json_encode(["message" => "Error creating post while uploading"]);
+                echo json_encode(["error" => "Error creating post while uploading"]);
             }
         } else {
-            echo json_encode(["message" => "Error uploading post"]);
+            echo json_encode(["error" => "Error uploading post"]);
         }
     } elseif ($action == "getPosts" && $_SERVER['REQUEST_METHOD'] === 'GET') {
         $posts = Post::showPosts($db);
@@ -43,12 +55,11 @@ if(isset($_REQUEST['action'])){
         echo json_encode($posts);
         exit;
     } else {
-        echo json_encode(["message" => "Action not allowed"]);
+        echo json_encode(["error" => "Action not allowed"]);
     }
 } else {
-    echo json_encode(["message" => "Empty Action Request"]);
+    echo json_encode(["error" => "Empty Action Request"]);
 }
-
 
 // DELETE POST 
 
@@ -60,7 +71,7 @@ if(isset($_REQUEST['action'])){
         if ($success) {
             echo json_encode(["message" => "Post successfully deleted"]);
         } else {
-            echo json_encode(["message" => "Error deleting post"]);
+            echo json_encode(["error" => "Error deleting post"]);
         }
         exit;
     }
