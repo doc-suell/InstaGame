@@ -12,6 +12,7 @@ const closeModal = () => {
   isModalOpen.value = false;
 };
 
+
 </script>
 
 <template>

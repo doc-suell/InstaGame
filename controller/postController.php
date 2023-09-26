@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 header('Content-Type: application/json');
@@ -16,8 +16,29 @@ if(isset($_REQUEST['action'])){
     $action = $_REQUEST['action'];
 
     if($action == "addPost" && $_SERVER['REQUEST_METHOD'] === 'POST'){
-        $postPicture = $_FILES['file']; 
+        $postPicture = $_FILES['file'];
         $description = $_POST['description'];
+
+        // FILE FILTER ONLY  (JPEG ou JPG)
+        $allowedExtensions = array("jpg", "jpeg");
+        $fileExtension = strtolower(pathinfo($postPicture['name'], PATHINFO_EXTENSION));
+        
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            echo json_encode(["error" => "Only JPEG or JPG files are allowed."]);
+            exit;
+        }
+
+        // MAX file  (500 Ko)
+        if ($postPicture['size'] > 500 * 1024) {
+            echo json_encode(["error" => "The image exceeds the maximum allowed size (500 KB)."]);
+            exit;
+        }
+
+        // DESCRIPTION MAX CHARACTERS (200 caractères)
+        if (strlen($description) > 200) {
+            echo json_encode(["error" => "The description must not exceed 200 characters."]);
+            exit;
+        }
 
         if($postPicture['error'] === UPLOAD_ERR_OK){
             $uploadDir = "../images/";
@@ -32,10 +53,10 @@ if(isset($_REQUEST['action'])){
 
                 echo json_encode(["message" => "Post successfully created"]);
             } else {
-                echo json_encode(["message" => "Error creating post while uploading"]);
+                echo json_encode(["error" => "Error creating post while uploading"]);
             }
         } else {
-            echo json_encode(["message" => "Error uploading post"]);
+            echo json_encode(["error" => "Error uploading post"]);
         }
     } elseif ($action == "getPosts" && $_SERVER['REQUEST_METHOD'] === 'GET') {
         $posts = Post::showPosts($db);
@@ -43,14 +64,13 @@ if(isset($_REQUEST['action'])){
         echo json_encode($posts);
         exit;
     } else {
-        echo json_encode(["message" => "Action not allowed"]);
+        echo json_encode(["error" => "Action not allowed"]);
     }
 } else {
-    echo json_encode(["message" => "Empty Action Request"]);
+    echo json_encode(["error" => "Empty Action Request"]);
 }
 
-
-// DELETE POST 
+// SUPPRIMER LE POST
 
 if(isset($_REQUEST['action'])){
     $action = $_REQUEST['action'];
@@ -60,7 +80,7 @@ if(isset($_REQUEST['action'])){
         if ($success) {
             echo json_encode(["message" => "Post successfully deleted"]);
         } else {
-            echo json_encode(["message" => "Error deleting post"]);
+            echo json_encode(["error" => "Error deleting post"]);
         }
         exit;
     }

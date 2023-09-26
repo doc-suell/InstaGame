@@ -169,7 +169,7 @@ export default {
       {
         try {
           const response = await axios.post(
-            "http://localhost/insta/instaGame/controller/memberController.php",
+            "http://localhost/instaGame/controller/memberController.php",
             this.formData,
             {
               headers: {
