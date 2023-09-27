@@ -43,17 +43,17 @@ class User
     {
         // Préparez la requête SQL avec des paramètres liés
         $stmt = $db->getConnection()->prepare("SELECT id FROM users WHERE username = :username AND password = :password");
-        
+
         // Liez les valeurs aux paramètres
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
-        
+
         // Exécutez la requête
         $stmt->execute();
-        
+
         // Récupérez le résultat sous forme de tableau associatif
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         if ($result) {
             // Si l'authentification réussit, retournez l'ID de l'utilisateur
             return $result['id'];
@@ -76,10 +76,20 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function addUser(string $username, string $email, string $password, Database $db)
+    public static function addUser(User $user, Database $db)
     {
-        $stmt = $db->getConnection()->prepare('INSERT INTO users (username, email, password) VALUES (?, ?, ?)');
-        $stmt->execute([$username, $email, $password]);
+        $stmt = $db->getConnection()->prepare('INSERT INTO `users` (username, email, password, profile_picture ) VALUES (:username,:email,:password, :profile_picture)');
+
+        $username = $user->getUsername();
+        $email = $user->getEmail();
+        $password = $user->getPassword();
+        $profilePicture = $user->getProfilePicture();
+
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':profile_picture', $profilePicture);
+        $stmt->execute();
     }
 
     public static function updateUser(int $id, string $username, string $email, string $password, string $profilePicture, Database $db)
@@ -94,7 +104,8 @@ class User
         $stmt->execute([$id]);
     }
 
-    public static function usernameExists(string $username, Database $db) {
+    public static function usernameExists(string $username, Database $db)
+    {
         $stmt = $db->getConnection()->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
         $stmt->bindParam(":username", $username, PDO::PARAM_STR);
         $stmt->execute();
@@ -102,7 +113,8 @@ class User
         return $count > 0;
     }
 
-    public static function emailExists(string $email, Database $db) {
+    public static function emailExists(string $email, Database $db)
+    {
         $stmt = $db->getConnection()->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
         $stmt->execute();

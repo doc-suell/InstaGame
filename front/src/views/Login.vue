@@ -102,15 +102,6 @@ export default {
       }
 
       try {
-        // const response = await axios.post(
-        //   "http://localhost/insta/instaGame/controller/memberController.php",
-        //   this.formData,
-        //   {
-        //     headers: {
-        //       "Content-Type": "application/x-www-form-urlencoded",
-        //     },
-        //   }
-        // );
         const response = await instance.post(
           "memberController.php",          
           this.formData,          
