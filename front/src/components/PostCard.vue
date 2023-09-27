@@ -21,7 +21,7 @@ export default {
       try {
         await axios.delete(`http://localhost/instaGame/controller/postController.php?action=deletePost&id=${postId}`);
         this.$emit('postDeleted', postId);
-        this.$emit('openEditModal', postId);
+        this.$emit('openModalEdit', postId);
       } catch (error) {
         console.error('Erreur lors de la suppression du post :', error);
       }
@@ -49,7 +49,7 @@ export default {
               <button @click="deletePost(post.id)">
                 <span>Delete</span>
                 <i class="fa-regular fa-trash-can"></i></button>
-              <button @click="openEditModal(post.id)">
+              <button @click="openModalEdit(post.id)">
                 <span>Edit Post</span>
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
@@ -79,7 +79,7 @@ export default {
         </div>
         <p class="description">{{ post.description }}</p>
         <div class="comment">
-          <Comment /> 
+          <Comment :postId="post.id" />
         </div>
       </div>
       <!-- END SINGLE CARD :// -->
