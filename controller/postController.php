@@ -72,6 +72,13 @@ if(isset($_REQUEST['action'] )){
       
         echo json_encode($posts);
         exit;
+    } elseif ($action == "getPostsByUserId" && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $id = $_POST['id'];
+        $posts = Post::showPostsByUserId($id, $db);
+      
+        echo json_encode($posts);
+        exit;
     } else {
         echo json_encode(["error" => "Action not allowed"]);
     }

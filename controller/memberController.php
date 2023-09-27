@@ -39,11 +39,11 @@ if (isset($_POST['action'])) {
         if ($postPicture['error'] === UPLOAD_ERR_OK) {
             $uploadDir = "../images/";
             $uploadPath = $uploadDir . $postPicture['name'];
+    
+                if(move_uploaded_file($postPicture['tmp_name'], $uploadPath)){
+                    $postPicturePath = "http://localhost/instaGame/images/" . $postPicture['name'];
 
-            if (move_uploaded_file($postPicture['tmp_name'], $uploadPath)) {
-                $postPicturePath = "http://localhost/instaGame/images/" . $postPicture['name'];
-
-                $user = new User(NULL, $username, $email, $password, $uploadPath, NULL);
+                $user = new User(NULL, $username, $email, $password, $postPicturePath, NULL);
                 User::addUser($user, $db);
 
                 echo json_encode(["message" => "Utilisateur ajouté avec succès"]);
@@ -51,7 +51,6 @@ if (isset($_POST['action'])) {
                 echo json_encode(["error" => "Error adding user while uploading"]);
             }
         } else {
-
         }
     } else if ($_POST['action'] == "login") {
         $db = new Database();
@@ -69,8 +68,10 @@ if (isset($_POST['action'])) {
         if ($_SESSION['id'] == "") {
             echo json_encode(["message" => "Session vide"]);
         } else {
+            $db = new Database();
             $userId = $_SESSION['id'];
-            echo json_encode(["id" => $userId, "message" => "Utilisateur connecté "]);
+            $_SESSION['user'] = User::getsById($userId, $db);
+            echo json_encode(["user" => $_SESSION['user'], "message" => "Utilisateur connecté "]);
         }
     }
 } else {

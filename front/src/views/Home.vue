@@ -47,16 +47,6 @@ export default {
         handlePostDeleted(deletedPostId) {
             this.posts = this.posts.filter(post => post.id !== deletedPostId);
         },
-        handlePostAdded(newPostId) {
-            axios.get(`http://localhost/instaGame/controller/postController.php?action=getPost&id=${newPostId}`)
-                .then((response) => {
-                    const newPost = response.data;
-                    this.posts.unshift(newPost);
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        },
     },
     data() {
         return {

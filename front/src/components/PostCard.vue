@@ -3,8 +3,6 @@ import Comment from "./Comment.vue";
 import EditPostModal from "./EditPostModal.vue";
 import axios from 'axios'; 
 
-import { ref } from 'vue';
-
 export default {
   name: "PostCard",
   props: {
