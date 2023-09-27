@@ -2,22 +2,25 @@
 session_start();
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: http://localhost:5173');
 header('Access-Control-Allow-Methods: GET , POST, PUT, DELETE, OPTIONS');
 header("Access-Control-Allow-Headers: X-Requested-With");
 header("Access-Control-Allow-Headers: Content-Type");
+header('Access-Control-Allow-Credentials: true');
 
 include_once "../config/database.php";
 include_once "../models/Post.php";
 
 $db = new Database();
 
-if(isset($_REQUEST['action'])){
+
+if(isset($_REQUEST['action'] )){
     $action = $_REQUEST['action'];
 
     if($action == "addPost" && $_SERVER['REQUEST_METHOD'] === 'POST'){
         $postPicture = $_FILES['file'];
         $description = $_POST['description'];
+        
 
         // FILE FILTER ONLY  (JPEG ou JPG)
         $allowedExtensions = array("jpg", "jpeg");
@@ -47,10 +50,12 @@ if(isset($_REQUEST['action'])){
             if(move_uploaded_file($postPicture['tmp_name'], $uploadPath)){
                 $postPicturePath = "http://localhost/instaGame/images/" . $postPicture['name'];
                 $description = htmlspecialchars($description);
-
-                $post = new Post(null, 1, $description, $postPicturePath, null);
+               
+                $userId = $_SESSION['id'];
+                $post = new Post(null, $userId, $description, $postPicturePath, null);
                 $post->addPost($post, $db);
-
+                
+  
                 echo json_encode(["message" => "Post successfully created"]);
             } else {
                 echo json_encode(["error" => "Error creating post while uploading"]);
@@ -59,8 +64,12 @@ if(isset($_REQUEST['action'])){
             echo json_encode(["error" => "Error uploading post"]);
         }
     } elseif ($action == "getPosts" && $_SERVER['REQUEST_METHOD'] === 'GET') {
+
         $posts = Post::showPosts($db);
+        
+    
         header('Content-Type: application/json');
+      
         echo json_encode($posts);
         exit;
     } else {
