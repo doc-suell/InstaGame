@@ -13,15 +13,29 @@ const submitForm = async () => {
     error.value = "The image is required.";
     return;
   }
+  const instance = axios.create({
+  baseURL: "http://localhost/instaGame/controller/",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+    'Content-Type': 'multipart/form-data',
+  },
+  withCredentials: true,
+});
 
-  try {
+try {
     formData.append('action', 'addPost');
     formData.append('description', formData.description || '');
-    const response = await axios.post('http://localhost/instaGame/controller/postController.php', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const response = await instance.post("postController.php", formData);
+
+
+  // try {
+  //   formData.append('action', 'addPost');
+  //   formData.append('description', formData.description || '');
+  //   const response = await axios.post('http://localhost/instaGame/controller/postController.php', formData, {
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data',
+  //     },
+  //   });
 
     if (response.data.error) {
       error.value = response.data.error;
