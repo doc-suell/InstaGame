@@ -59,6 +59,14 @@ class Comment
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public static function getCommentsByPostId(Database $db, $postId)
+    {
+        $stmt = $db->getConnection()->prepare("SELECT * FROM `comments` WHERE `post_id` = :postId");
+        $stmt->bindParam(':postId', $postId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public static function createComment(Database $db, Comment $comment)
     {
         $stmt = $db->getConnection()->prepare("INSERT INTO comments (user_id, post_id, comment) VALUES (:userId, :postId, :comment)");
@@ -72,10 +80,9 @@ class Comment
         $stmt->execute();
     }
 
-    public static function deleteComment(Database $db, $comment)
+    public static function deleteComment(Database $db, $id)
     {
         $stmt = $db->getConnection()->prepare("DELETE FROM comments WHERE id = :id");
-        $id = $comment->getId();
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
     }

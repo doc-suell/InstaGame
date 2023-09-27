@@ -47,6 +47,7 @@ const router = VueRouter.createRouter({
     ]
 })
 
+
 const app = createApp(App)
 app.use(router).mount('#app')
 app.mount('app')

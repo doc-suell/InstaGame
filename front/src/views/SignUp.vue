@@ -117,8 +117,6 @@ export default {
       // Créez une copie de formData
       const formDataCopy = { ...this.formData };
 
-      console.log("formData", formDataCopy);
-
       try {
         const response = await axios.post(
           "http://localhost/instaGame/controller/memberController.php",
@@ -129,8 +127,7 @@ export default {
             },
           }
         );
-        console.log("-------->", response.data);
-
+        
         if (response.data.message === "Utilisateur ajouté avec succès") {
           // La création de compte a réussi, redirigez l'utilisateur
           this.registrationSuccess = true;

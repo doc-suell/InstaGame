@@ -1,18 +1,20 @@
 <script>
+import { onMounted } from "vue";
 import Comment from "./Comment.vue";
 import EditPostModal from "./EditPostModal.vue";
-import axios from 'axios'; 
+import axios from 'axios';
 
 export default {
   name: "PostCard",
   props: {
     posts: Array,
   },
-  components: { Comment , EditPostModal },
+  components: { Comment, EditPostModal },
   data() {
     return {
       isModalOpenEdit: false,
       selectedPostId: null, // Ajoutez une propriété pour stocker l'ID du post sélectionné
+      postProfilPicture: "",
     };
   },
   methods: {
@@ -25,6 +27,24 @@ export default {
         console.error('Erreur lors de la suppression du post :', error);
       }
     },
+    // async getProfilPicture(postId) {
+    //   try {
+    //     const response = await axios.post("http://localhost/instaGame/controller/memberController.php", {
+    //       params: {
+    //         action: "getProfilPicture",
+    //         post_id: postId,
+    //       },
+    //     });
+    //     console.log("-----", response.data);
+
+    //     if (response.data.error) {
+    //       this.error = response.data.error;
+    //     }
+    //   } catch (error) {
+    //     console.error(error);
+    //     this.error = "Une erreur s'est produite lors de la récupération des photos.";
+    //   }
+    // },
     openModalEdit() {
       this.isModalOpenEdit = true;
     },
@@ -36,7 +56,7 @@ export default {
       this.openModalEdit();
     },
   },
-};
+}
 </script>
 
 <template>

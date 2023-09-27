@@ -80,7 +80,6 @@ export default {
                 console.error(error);
             }
         };
-        console.log("eeeeeeee", posts);
 
 
         onMounted(() => {

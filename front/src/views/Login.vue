@@ -108,7 +108,6 @@ export default {
         );
         if (response.data !== "") {
           this.$router.push("/");
-          console.log("-------->", response.data);
         } else {
           this.loginError = true;
         }

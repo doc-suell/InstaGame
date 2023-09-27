@@ -79,7 +79,7 @@ if(isset($_REQUEST['action'] )){
       
         echo json_encode($posts);
         exit;
-    } else {
+    }  else {
         echo json_encode(["error" => "Action not allowed"]);
     }
 } else {

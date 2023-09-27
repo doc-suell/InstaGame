@@ -69,6 +69,13 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public static function getProfilPictureByPostId($postId, Database $db)
+    {
+        $stmt = $db->getConnection()->query("SELECT profile_picture FROM users JOIN post ON users.id = posts.user_id WHERE user_id = '$postId'");
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+ 
+    }
+
     public static function getUserByEmail(string $email, Database $db)
     {
         $stmt = $db->getConnection()->prepare('SELECT * FROM users WHERE email = ?');

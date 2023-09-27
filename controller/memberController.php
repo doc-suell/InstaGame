@@ -39,9 +39,9 @@ if (isset($_POST['action'])) {
         if ($postPicture['error'] === UPLOAD_ERR_OK) {
             $uploadDir = "../images/";
             $uploadPath = $uploadDir . $postPicture['name'];
-    
-                if(move_uploaded_file($postPicture['tmp_name'], $uploadPath)){
-                    $postPicturePath = "http://localhost/instaGame/images/" . $postPicture['name'];
+
+            if (move_uploaded_file($postPicture['tmp_name'], $uploadPath)) {
+                $postPicturePath = "http://localhost/instaGame/images/" . $postPicture['name'];
 
                 $user = new User(NULL, $username, $email, $password, $postPicturePath, NULL);
                 User::addUser($user, $db);
@@ -60,7 +60,7 @@ if (isset($_POST['action'])) {
         $userId = User::login($username, $password, $db);
 
         if ($userId !== false) {
-            $_SESSION['id'] = $userId; // Enregistrez l'ID de l'utilisateur dans la session
+            $_SESSION['id'] = $userId;
             $_SESSION['user'] = $username;
             echo json_encode(["id" => $userId, "message" => $username . " connecté"]);
         }
@@ -69,10 +69,22 @@ if (isset($_POST['action'])) {
             echo json_encode(["message" => "Session vide"]);
         } else {
             $db = new Database();
-            $userId = $_SESSION['id'];
-            $_SESSION['user'] = User::getsById($userId, $db);
-            echo json_encode(["user" => $_SESSION['user'], "message" => "Utilisateur connecté "]);
+            if ($_SESSION['id']) {
+                $userId = $_SESSION['id'];
+                $_SESSION['user'] = User::getsById($userId, $db);
+                echo json_encode(["user" => $_SESSION['user'], "message" => "Utilisateur connecté "]);
+            } else {
+                echo json_encode(["message" => "Pas d'utilisateur connecté"]);
+            }
         }
+    } else if ($_POST['action'] == "getProfilPicture") {
+        $commentId = $_GET['id'];
+        $result = User::getProfilPictureByPostId($db, $commentId);
+        var_dump($result);
+        echo json_encode(["result" => $result, "message" => "Profil picture taken"]);
+    } else if ($_POST['action'] == "logout") {
+        session_destroy();
+        echo json_encode(["message" => "Disconnected."]);
     }
 } else {
     echo json_encode(["message" => "Aucune action spécifiée"]);
