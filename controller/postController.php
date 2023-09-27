@@ -100,54 +100,45 @@ if(isset($_REQUEST['action'])){
 // EDIT LE POST
 
 
+if (isset($_REQUEST['action'])) {
+    if ($_REQUEST['action'] === 'editPost') {
+        if (isset($_REQUEST['id'], $_REQUEST['new_description']) && isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+            $postId = $_REQUEST['id'];
+            $newDescription = $_REQUEST['new_description'];
 
-// EDIT LE POST
+            // Gérez le téléchargement de la nouvelle image si nécessaire
+            $newImagePath = null;
+            $allowedExtensions = array("jpg", "jpeg");
+            $fileExtension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
 
+            if (in_array($fileExtension, $allowedExtensions) && $_FILES['file']['size'] <= 500 * 1024) {
+                $uploadDir = "../images/";
+                $uploadPath = $uploadDir . $_FILES['file']['name'];
 
-if(isset($_REQUEST['action'])) {
-    parse_str(file_get_contents("php://input"), $putData);
-           $postId = $putData['id'];
-           $newDescription = $putData['new_description'];
-   
-           // Check if a new image is provided
-           if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-               $newImage = $_FILES['file'];
-   
-               // FILE FILTER ONLY  (JPEG ou JPG)
-               $allowedExtensions = array("jpg", "jpeg");
-               $fileExtension = strtolower(pathinfo($newImage['name'], PATHINFO_EXTENSION));
-   
-               if (!in_array($fileExtension, $allowedExtensions)) {
-                   echo json_encode(["error" => "Only JPEG or JPG files are allowed."]);
-                   exit;
-               }
-   
-               // MAX file  (500 Ko)
-               if ($newImage['size'] > 500 * 1024) {
-                   echo json_encode(["error" => "The image exceeds the maximum allowed size (500 KB)."]);
-                   exit;
-               }
-   
-               $uploadDir = "../images/";
-               $uploadPath = $uploadDir . $newImage['name'];
-   
-               if (move_uploaded_file($newImage['tmp_name'], $uploadPath)) {
-                   $newImagePath = "http://localhost/instaGame/images/" . $newImage['name'];
-               } else {
-                   echo json_encode(["error" => "Error uploading new image"]);
-                   exit;
-               }
-           }
-   
-           $success = Post::updatePost($postId, $newDescription, $newImagePath, $db);
-   
-           if ($success) {
-               echo json_encode(["message" => "Post successfully edited"]);
-           } else {
-               echo json_encode(["error" => "Error editing post"]);
-           }
-           exit;
-   }
-   ?>
-   
+                if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadPath)) {
+                    $newImagePath = "http://localhost/instaGame/images/" . $_FILES['file']['name'];
+                } else {
+                    echo json_encode(["error" => "Error uploading new image"]);
+                    exit;
+                }
+            } else {
+                echo json_encode(["error" => "Invalid image format or size"]);
+                exit;
+            }
+
+            // Mettez à jour le post avec la nouvelle description et l'image le cas échéant
+            $success = Post::updatePost($postId, $newDescription, $newImagePath, $db);
+
+            if ($success) {
+                echo json_encode(["message" => "Post successfully edited"]);
+            } else {
+                echo json_encode(["error" => "Error editing post"]);
+            }
+            exit;
+        } else {
+            echo json_encode(["error" => "Invalid data received"]);
+            exit;
+        }
+    }
+}
 ?>

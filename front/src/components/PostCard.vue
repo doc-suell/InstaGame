@@ -14,6 +14,7 @@ export default {
   data() {
     return {
       isModalOpenEdit: false,
+      selectedPostId: null, // Ajoutez une propriété pour stocker l'ID du post sélectionné
     };
   },
   methods: {
@@ -32,6 +33,10 @@ export default {
     closeModalEdit() {
       this.isModalOpenEdit = false;
     },
+    editPost(postId) { // Fonction pour ouvrir la fenêtre modale et stocker l'ID du post sélectionné
+      this.selectedPostId = postId;
+      this.openModalEdit();
+    },
   },
 };
 </script>
@@ -49,7 +54,7 @@ export default {
               <button @click="deletePost(post.id)">
                 <span>Delete</span>
                 <i class="fa-regular fa-trash-can"></i></button>
-              <button @click="openModalEdit(post.id)">
+              <button @click="editPost(post.id)"> <!-- Utilisez la fonction editPost pour ouvrir la modale -->
                 <span>Edit Post</span>
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
@@ -83,13 +88,7 @@ export default {
         </div>
       </div>
       <!-- END SINGLE CARD :// -->
-      <EditPostModal :isOpenEdit="isModalOpenEdit" :closeModalEdit="closeModalEdit" />
+      <EditPostModal :isOpenEdit="isModalOpenEdit" :closeModalEdit="closeModalEdit" :postId="selectedPostId" />
     </div>
   </div>
-
 </template>
-
-
-<style>
-
-</style>
