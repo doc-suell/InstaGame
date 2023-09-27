@@ -22,6 +22,7 @@ export default {
 
   </header>
   <main>
+    <NavBar />
     <router-view></router-view>
 
   </main>
