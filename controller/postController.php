@@ -107,18 +107,45 @@ if(isset($_REQUEST['action'])){
 // EDIT LE POST
 
 
-if(isset($_REQUEST['action'])) {
-    if ($action == "editPost" && $_SERVER['REQUEST_METHOD'] === 'PUT') {
-        $postId = $putData['id'];
-        $newDescription = $putData['new_description'];
+if (isset($_REQUEST['action'])) {
+    if ($_REQUEST['action'] === 'editPost') {
+        if (isset($_REQUEST['id'], $_REQUEST['new_description']) && isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+            $postId = $_REQUEST['id'];
+            $newDescription = $_REQUEST['new_description'];
 
-        $success = Post::updatePost($postId, $newDescription, $newImagePath, $db);
-        if ($success) {
-            echo json_encode(["message" => "Post successfully edited"]);
+            // Gérez le téléchargement de la nouvelle image si nécessaire
+            $newImagePath = null;
+            $allowedExtensions = array("jpg", "jpeg");
+            $fileExtension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
+
+            if (in_array($fileExtension, $allowedExtensions) && $_FILES['file']['size'] <= 500 * 1024) {
+                $uploadDir = "../images/";
+                $uploadPath = $uploadDir . $_FILES['file']['name'];
+
+                if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadPath)) {
+                    $newImagePath = "http://localhost/instaGame/images/" . $_FILES['file']['name'];
+                } else {
+                    echo json_encode(["error" => "Error uploading new image"]);
+                    exit;
+                }
+            } else {
+                echo json_encode(["error" => "Invalid image format or size"]);
+                exit;
+            }
+
+            // Mettez à jour le post avec la nouvelle description et l'image le cas échéant
+            $success = Post::updatePost($postId, $newDescription, $newImagePath, $db);
+
+            if ($success) {
+                echo json_encode(["message" => "Post successfully edited"]);
+            } else {
+                echo json_encode(["error" => "Error editing post"]);
+            }
+            exit;
         } else {
-            echo json_encode(["error" => "Error editing post"]);
+            echo json_encode(["error" => "Invalid data received"]);
+            exit;
         }
-        exit;
     }
 }
 ?>

@@ -62,7 +62,7 @@ if (isset($_POST['action'])) {
         if ($userId !== false) {
             $_SESSION['id'] = $userId; // Enregistrez l'ID de l'utilisateur dans la session
             $_SESSION['user'] = $username;
-            echo json_encode(["id" => $userId, "message" => "Utilisateur connecté avec succès"]);
+            echo json_encode(["id" => $userId, "message" => $username . " connecté"]);
         }
     } else if ($_POST['action'] == "checkConnection") {
         if ($_SESSION['id'] == "") {
