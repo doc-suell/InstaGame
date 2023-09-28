@@ -8,8 +8,8 @@
     </div>
 
     <!-- Afficher le bouton "See more" ou "See less" en fonction de l'état -->
-    <button @click="toggleCommentsDisplay" class="mt-1 text-sm text-blue-600">
-  {{ showAllComments ? "See less" : `See more comments (${comments.length - 3} more)` }}
+    <button v-if="comments.length > 3" @click="toggleCommentsDisplay" class="mt-1 text-sm text-blue-600">
+  {{ showAllComments ? "See less" : `See more comments (${comments.length - 3})` }}
 </button>
 
 
