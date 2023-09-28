@@ -3,6 +3,8 @@ import { onMounted } from "vue";
 import Comment from "./Comment.vue";
 import EditPostModal from "./EditPostModal.vue";
 import axios from 'axios';
+import { ref, defineProps } from 'vue'
+
 
 export default {
   name: "PostCard",
@@ -12,8 +14,9 @@ export default {
   components: { Comment, EditPostModal },
   data() {
     return {
+      isSmallModalOpen: false,
       isModalOpenEdit: false,
-      selectedPostId: null, // Ajoutez une propriété pour stocker l'ID du post sélectionné
+      selectedPostId: null,
       postProfilPicture: "",
     };
   },
@@ -37,6 +40,10 @@ export default {
       this.selectedPostId = postId;
       this.openModalEdit();
     },
+    toggleSmallModal() {
+    this.isSmallModalOpen = !this.isSmallModalOpen;
+  },
+
   },
 
 
@@ -50,13 +57,13 @@ export default {
       <div class="card-items">
         <div class="card-header">
           <!-- SMALL MODAL  -->
-          <div id="smallModal" class="small-modal-post">
+          <div v-show="isSmallModalOpen" id="smallModal" class="small-modal-post">
             <!-- <div class="overlay-small-modal"></div> -->
             <ul>
               <button @click="deletePost(post.id)">
                 <span>Delete</span>
                 <i class="fa-regular fa-trash-can"></i></button>
-              <button @click="editPost(post.id)"> <!-- Utilisez la fonction editPost pour ouvrir la modale -->
+              <button @click="editPost(post.id)"> 
                 <span>Edit Post</span>
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
@@ -72,7 +79,7 @@ export default {
           </div>
           <span class="user-name">{{ post.username }}</span>
           <!-- SMALL MODAL OPEN  -->
-          <span class="open-small-modal-post"><i class="fa-solid fa-ellipsis"></i></span>
+          <span @click="toggleSmallModal" id="toggle-small-modal" class="open-small-modal-post"><i class="fa-solid fa-ellipsis"></i></span>
         </div>
         <div class="card-body">
           <img :src="post.post_picture" alt="post-pic">
