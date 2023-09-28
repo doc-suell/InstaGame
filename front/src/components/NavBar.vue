@@ -1,14 +1,26 @@
 <script setup>
 
+import { modalStates, toggleModal } from '../modal';
 import { useRoute, useRouter } from 'vue-router'; // Importez useRoute et useRouter
 import { onMounted, reactive, ref, watch } from 'vue';
 import axios from "axios";
 import SearchBar from './SearchBar.vue';
 import CreatPostModal from './CreatPostModal.vue';
 
+
+// const modalStates = ref(false);
+// const toggleModal = () => {
+//     modalStates.value = !modalStates.value; 
+// };
+
+
+
+
+const isModalOpen = ref(false);
+
 const route = useRoute(); // Utilisez useRoute pour accéder à la route actuelle
 const router = useRouter(); // Utilisez useRouter pour accéder au routeur
-const isModalOpen = ref(false);
+
 const isUserConnected = ref(false);
 const openModal = () => {
     isModalOpen.value = true;
@@ -135,14 +147,14 @@ export default {
                 </ul>
             </div>
             <!-- PROFILE LINK MODALE  -->
-            <div id="modal-button" class="pic-profile-nav">
+            <div @click="toggleModal" id="modal-button" class="pic-profile-nav">
                 <img src="/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="pic-profil">
             </div>
             <!-- END PROFILE LINK MODALE  -->
 
         </nav>
         <!-- MODAL  -->
-        <div id="modal" class="modal hidden">
+        <div v-show="modalStates" id="modal" class="modal hidden">
             <ul>
                 <router-link to="/profil" id="link-modal" class="link-modal">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -157,7 +169,7 @@ export default {
                         <path
                             d="M96 0C78.3 0 64 14.3 64 32v96h64V32c0-17.7-14.3-32-32-32zM288 0c-17.7 0-32 14.3-32 32v96h64V32c0-17.7-14.3-32-32-32zM32 160c-17.7 0-32 14.3-32 32s14.3 32 32 32v32c0 77.4 55 142 128 156.8V480c0 17.7 14.3 32 32 32s32-14.3 32-32V412.8C297 398 352 333.4 352 256V224c17.7 0 32-14.3 32-32s-14.3-32-32-32H32z" />
                     </svg>
-                    <span>Logout</span>
+                    <span class="pl-[6px]">Logout</span>
                 </router-link>
             </ul>
         </div>

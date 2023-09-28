@@ -1,5 +1,5 @@
 <template>
-    <NavBar />
+    <NavBar  />
     <div class="container profile-container">
         <div class="header-profile">
         <div class="profile">
@@ -19,10 +19,17 @@
   
   
 <script>
+
+// import { modalStates, toggleModal } from '../modal';
+
+
 import axios from "axios";
 import { onMounted, reactive, ref } from "vue";
 import PostCard from "@/components/PostCard.vue";
 import NavBar from "../components/NavBar.vue";
+
+
+
 
 const instance = axios.create({
     baseURL: "http://localhost/instaGame/controller/",
