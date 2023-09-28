@@ -104,7 +104,7 @@ export default {
         });
 
         if (response.data.username) {
-          console.log('----->', response.data.username);
+          // console.log('----->', response.data.username);
           return response.data.username;
         } else {
           console.error("Unable to get username for comment.");

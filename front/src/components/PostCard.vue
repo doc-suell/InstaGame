@@ -42,7 +42,7 @@ export default {
       isSmallModalOpen: false,
       isModalOpenEdit: false,
       selectedPostId: null,
-      postProfilPicture: "",
+      profilPictures: {},
       modalStates: {},
     };
   },
@@ -59,24 +59,9 @@ export default {
         console.error('Erreur lors de la suppression du post :', error);
       }
     },
-    // async getProfilPicture(postId) {
-    //   try {
-    //     const response = await axios.post("http://localhost/instaGame/controller/memberController.php", {
-    //       params: {
-    //         action: "getProfilPicture",
-    //         post_id: postId,
-    //       },
-    //     });
-    //     console.log("-----", response.data);
-
-    //     if (response.data.error) {
-    //       this.error = response.data.error;
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //     this.error = "Une erreur s'est produite lors de la récupération des photos.";
-    //   }
-    // },
+    forceRerender() {
+      this.$forceUpdate();
+    },
     openModalEdit() {
       this.isModalOpenEdit = true;
     },
@@ -88,19 +73,25 @@ export default {
       this.openModalEdit();
     },
     toggleSmallModal(postId) {
-    this.modalStates[postId] = !this.modalStates[postId];
-  },
+      this.modalStates[postId] = !this.modalStates[postId];
+    },
 
   },
 
   created() {
-    for (const post of this.posts) {
-      getProfilPicture(post.user_id).then((res) =>
-      {
-        this.profilPictures[post.user_id] = res;
-        // console.log(res);
-      })
-    }
+    setTimeout(() => {
+      this.forceRerender();
+      for (const post of this.posts) {
+        getProfilPicture(post.user_id).then((res) => {
+          this.profilPictures[post.user_id] = res;
+          // console.log(res);
+        })
+      }
+    }, 100);
+  },
+  beforeDestroy() {
+    // Assurez-vous de nettoyer l'intervalle lorsque le composant est détruit pour éviter les fuites de mémoire
+    clearInterval(this.intervalId);
   }
 
 }
@@ -120,7 +111,7 @@ export default {
               <button @click="deletePost(post.id)">
                 <span>Delete</span>
                 <i class="fa-regular fa-trash-can"></i></button>
-              <button @click="editPost(post.id)"> 
+              <button @click="editPost(post.id)">
                 <span>Edit Post</span>
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
@@ -136,7 +127,8 @@ export default {
           </div>
           <span class="user-name">{{ post.username }}</span>
           <!-- SMALL MODAL OPEN  -->
-          <span @click="toggleSmallModal(post.id)" id="toggle-small-modal" class="open-small-modal-post"><i class="fa-solid fa-ellipsis"></i></span>
+          <span @click="toggleSmallModal(post.id)" id="toggle-small-modal" class="open-small-modal-post"><i
+              class="fa-solid fa-ellipsis"></i></span>
         </div>
         <div class="card-body">
           <img :src="post.post_picture" alt="post-pic">
@@ -149,7 +141,7 @@ export default {
           <span class="card-footer-icons"><i class="fa-regular fa-bookmark"></i></span>
         </div>
         <p class="description mt-2 text-base">{{ post.description }}</p>
-        <hr class="w-4/5 mx-auto mt-2"/>
+        <hr class="w-4/5 mx-auto mt-2" />
         <div class="comment">
           <Comment :postId="post.id" />
         </div>
