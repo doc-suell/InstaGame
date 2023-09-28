@@ -27,24 +27,6 @@ export default {
         console.error('Erreur lors de la suppression du post :', error);
       }
     },
-    // async getProfilPicture(postId) {
-    //   try {
-    //     const response = await axios.post("http://localhost/instaGame/controller/memberController.php", {
-    //       params: {
-    //         action: "getProfilPicture",
-    //         post_id: postId,
-    //       },
-    //     });
-    //     console.log("-----", response.data);
-
-    //     if (response.data.error) {
-    //       this.error = response.data.error;
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //     this.error = "Une erreur s'est produite lors de la récupération des photos.";
-    //   }
-    // },
     openModalEdit() {
       this.isModalOpenEdit = true;
     },
@@ -56,6 +38,8 @@ export default {
       this.openModalEdit();
     },
   },
+
+
 }
 </script>
 
