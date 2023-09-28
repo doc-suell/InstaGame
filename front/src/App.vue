@@ -1,7 +1,6 @@
 <script>
-import { onMounted, reactive, ref, watch } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import Footer from '../src/components/Footer.vue';
-import NavBar from '../src/components/NavBar.vue';
 import axios from "axios";
 import { useRoute, useRouter } from 'vue-router';
 
@@ -53,7 +52,7 @@ export default {
     };
   },
 
-  components: { NavBar, Footer }
+  components: { Footer }
   ,
   method: {}
 }
@@ -61,7 +60,6 @@ export default {
 <template>
   <header></header>
   <main>
-    <NavBar />
     <router-view></router-view>
   </main>
   <Footer></Footer>

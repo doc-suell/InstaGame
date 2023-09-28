@@ -1,4 +1,5 @@
 <template>
+    <NavBar />
     <div class="text-black text-4xl">
         <div class="mx-auto text-center mt-12 mb-24">
             <img :src="profilePicture" alt="profil picture" class="mb-12 w-[10%] mx-auto">
@@ -19,6 +20,7 @@
 import axios from "axios";
 import { onMounted, reactive, ref } from "vue";
 import PostCard from "@/components/PostCard.vue";
+import NavBar from "../components/NavBar.vue";
 
 const instance = axios.create({
     baseURL: "http://localhost/instaGame/controller/",
@@ -31,8 +33,9 @@ const instance = axios.create({
 
 export default {
     components: {
-        PostCard,
-    },
+    PostCard,
+    NavBar
+},
     setup() {
         const username = ref("");
         const id = ref("");

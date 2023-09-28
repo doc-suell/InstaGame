@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import PostCard from "../components/PostCard.vue";
-
+import NavBar from "../components/NavBar.vue";
 
 
 export default {
@@ -30,7 +30,7 @@ export default {
         });
     },
     components: {
-        PostCard,
+        PostCard, NavBar
     }
 };
 
@@ -39,6 +39,7 @@ export default {
 </script>
 
 <template>
+    <NavBar />
     <PostCard @postDeleted="handlePostDeleted" :posts="posts"/>
 </template>
 
