@@ -1,11 +1,10 @@
 <template>
   <div>
-    <div v-for="(comment, index) in comments.slice(0, showAllComments ? comments.length : 3)" :key="index">
-
-      <p class="description">{{ comment.comment }}</p>
-
-
-      <button v-if="currentUser && currentUser.id === comment.user_id" @click="deleteComment(index)">Delete</button>
+    <div class="flex justify-between" v-for="(comment, index) in comments.slice(0, showAllComments ? comments.length : 3)" :key="index">
+      <p class="description">
+        <strong>{{ comment.username }} : </strong>{{ truncateText(comment.comment) }} 
+      </p>
+      <button v-if="currentUser && currentUser.id === comment.user_id" @click="deleteComment(index)"><i class="fa-regular fa-trash-can"></i></button>
     </div>
 
     <!-- Afficher le bouton "See more" ou "See less" en fonction de l'état -->
@@ -46,6 +45,13 @@ export default {
   },
 
   methods: {
+    truncateText(text) {
+    const maxLength = 40;
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  },
 
     toggleCommentsDisplay() {
       this.showAllComments = !this.showAllComments;
@@ -149,29 +155,31 @@ export default {
     //(-------------------------------------)
 
     async getComments() {
-      try {
-        const response = await axios.get("http://localhost/instaGame/controller/commentController.php", {
-          params: {
-            action: "getComments",
-            post_id: this.postId,
-          },
-        });
+  try {
+    const response = await axios.get("http://localhost/instaGame/controller/commentController.php", {
+      params: {
+        action: "getComments",
+        post_id: this.postId,
+      },
+    });
 
-        if (response.data.error) {
-          this.error = response.data.error;
-        } else {
-          // Mettez à jour le tableau des commentaires avec les commentaires récupérés
-          for (let i = 0; i < response.data.length; i++) {
-            if (response.data[i].post_id == this.postId)
-              this.comments.push(response.data[i])
-          };
-          // console.log(this.comments);
+    if (response.data.error) {
+      this.error = response.data.error;
+    } else {
+      // Mettez à jour le tableau des commentaires avec les commentaires récupérés
+      for (let i = 0; i < response.data.length; i++) {
+        if (response.data[i].post_id == this.postId) {
+          const comment = response.data[i];
+          comment.username = await this.getUsernameForComment(comment.id);
+          this.comments.push(comment);
         }
-      } catch (error) {
-        console.error(error);
-        this.error = "Une erreur s'est produite lors de la récupération des commentaires.";
       }
-    },
+    }
+  } catch (error) {
+    console.error(error);
+    this.error = "Une erreur s'est produite lors de la récupération des commentaires.";
+  }
+},
 
     //----------------
 
