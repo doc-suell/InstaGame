@@ -1,12 +1,38 @@
 <script>
-import { onMounted } from "vue";
 import Comment from "./Comment.vue";
 import EditPostModal from "./EditPostModal.vue";
-import axios from "axios";
-import { ref, defineProps } from "vue";
+import axios from 'axios';
+
+const instance = axios.create({
+  baseURL: "http://localhost/instaGame/controller/",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Content-Type": "multipart/form-data",
+  },
+  withCredentials: true,
+});
+
+const getProfilPicture = async (postId) => {
+  const postData = {
+    action: "getProfilPicture",
+    post_id: postId,
+  };
+  try {
+    const response = await instance.post("memberController.php", postData);
+    return response.data.result.profile_picture;
+    // this.test.value = response.data.result.profile_picture
+    // if (response) {
+    //   this.profilPictures[postId] = response.data.profile_picture;
+    // }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 export default {
   name: "PostCard",
+
   props: {
     posts: Array,
   },
@@ -16,11 +42,12 @@ export default {
       isSmallModalOpen: false,
       isModalOpenEdit: false,
       selectedPostId: null,
-      postProfilPicture: "",
+      profilPictures: {},
       modalStates: {},
       currentUser: null,
     };
   },
+
   methods: {
     async getCurrentUser() {
       try {
@@ -60,6 +87,9 @@ export default {
         console.error("Erreur lors de la suppression du post :", error);
       }
     },
+    forceRerender() {
+      this.$forceUpdate();
+    },
     openModalEdit() {
       this.isModalOpenEdit = true;
     },
@@ -75,10 +105,25 @@ export default {
       this.modalStates[postId] = !this.modalStates[postId];
     },
   },
+
   created() {
+    setTimeout(() => {
+      this.forceRerender();
+      for (const post of this.posts) {
+        getProfilPicture(post.user_id).then((res) => {
+          this.profilPictures[post.user_id] = res;
+          // console.log(res);
+        })
+      }
+    }, 100);
     this.getCurrentUser();
-},
-};
+  },
+  beforeDestroy() {
+    // Assurez-vous de nettoyer l'intervalle lorsque le composant est détruit pour éviter les fuites de mémoire
+    clearInterval(this.intervalId);
+  }
+
+}
 </script>
 
 <template>
@@ -86,6 +131,7 @@ export default {
     <div class="cards" v-for="post in posts" :key="post.id">
       <!-- SINGLE CARD :// -->
       <div class="card-items">
+
         <div class="card-header">
           <!-- SMALL MODAL  -->
           <div
@@ -114,7 +160,7 @@ export default {
           </div>
           <!-- END SMALL MODAL  -->
           <div class="pic-profile-nav">
-            <img src="/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="profile-pic" />
+            <img :src="profilPictures[post.user_id]" alt="profile-pic">
           </div>
           <span class="user-name">{{ post.username }}</span>
           <!-- SMALL MODAL OPEN  -->
@@ -122,7 +168,8 @@ export default {
             @click="toggleSmallModal(post.id)"
             id="toggle-small-modal"
             class="open-small-modal-post"
-            ><i class="fa-solid fa-ellipsis"></i
+            ><i
+              class="fa-solid fa-ellipsis"></i
           ></span>
         </div>
         <div class="card-body">
@@ -138,7 +185,7 @@ export default {
           ></span>
         </div>
         <p class="description mt-2 text-base">{{ post.description }}</p>
-        <hr class="w-4/5 mx-auto mt-2" />
+        <hr class="w-4/5 mx-auto mt-2"  />
         <div class="comment">
           <Comment :postId="post.id" />
         </div>

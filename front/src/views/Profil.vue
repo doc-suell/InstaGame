@@ -42,9 +42,9 @@ const instance = axios.create({
 
 export default {
     components: {
-    PostCard,
-    NavBar
-},
+        PostCard,
+        NavBar
+    },
     setup() {
         const email = ref("");
         const username = ref("");
