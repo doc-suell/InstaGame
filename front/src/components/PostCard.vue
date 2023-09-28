@@ -92,7 +92,8 @@ export default {
           </div>
           <span class="card-footer-icons"><i class="fa-regular fa-bookmark"></i></span>
         </div>
-        <p class="description">{{ post.description }}</p>
+        <p class="description mt-2 text-base">{{ post.description }}</p>
+        <hr class="w-4/5 mx-auto mt-2"/>
         <div class="comment">
           <Comment :postId="post.id" />
         </div>

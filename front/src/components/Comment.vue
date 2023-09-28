@@ -1,16 +1,16 @@
 <template>
   <div>
     <div class="flex justify-between" v-for="(comment, index) in comments.slice(0, showAllComments ? comments.length : 3)" :key="index">
-      <p class="description">
+      <p class="description mt-2 text-sm">
         <strong>{{ comment.username }} : </strong>{{ truncateText(comment.comment) }} 
       </p>
       <button v-if="currentUser && currentUser.id === comment.user_id" @click="deleteComment(index)"><i class="fa-regular fa-trash-can"></i></button>
     </div>
 
     <!-- Afficher le bouton "See more" ou "See less" en fonction de l'état -->
-    <button @click="toggleCommentsDisplay">
-      {{ showAllComments ? "See less" : "See more" }}
-    </button>
+    <button @click="toggleCommentsDisplay" class="mt-1 text-sm text-blue-600">
+  {{ showAllComments ? "See less" : `See more comments (${comments.length - 3} more)` }}
+</button>
 
 
     <div class="comment-input p-1 mt-3 flex">
@@ -248,3 +248,4 @@ export default {
   margin: 0 0 30px 0;
 }
 </style>
+
