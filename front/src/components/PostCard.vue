@@ -39,10 +39,11 @@ export default {
   components: { Comment, EditPostModal },
   data() {
     return {
+      isSmallModalOpen: false,
       isModalOpenEdit: false,
-      selectedPostId: null, //stocker l'ID sélectionné
-      profilPictures: {},
-      test: ""
+      selectedPostId: null,
+      postProfilPicture: "",
+      modalStates: {},
     };
   },
 
@@ -58,8 +59,24 @@ export default {
         console.error('Erreur lors de la suppression du post :', error);
       }
     },
+    // async getProfilPicture(postId) {
+    //   try {
+    //     const response = await axios.post("http://localhost/instaGame/controller/memberController.php", {
+    //       params: {
+    //         action: "getProfilPicture",
+    //         post_id: postId,
+    //       },
+    //     });
+    //     console.log("-----", response.data);
 
-
+    //     if (response.data.error) {
+    //       this.error = response.data.error;
+    //     }
+    //   } catch (error) {
+    //     console.error(error);
+    //     this.error = "Une erreur s'est produite lors de la récupération des photos.";
+    //   }
+    // },
     openModalEdit() {
       this.isModalOpenEdit = true;
     },
@@ -70,6 +87,9 @@ export default {
       this.selectedPostId = postId;
       this.openModalEdit();
     },
+    toggleSmallModal(postId) {
+    this.modalStates[postId] = !this.modalStates[postId];
+  },
 
   },
 
@@ -94,13 +114,13 @@ export default {
 
         <div class="card-header">
           <!-- SMALL MODAL  -->
-          <div id="smallModal" class="small-modal-post">
+          <div v-show="modalStates[post.id]" :id="'smallModal_' + post.id" class="small-modal-post">
             <!-- <div class="overlay-small-modal"></div> -->
             <ul>
               <button @click="deletePost(post.id)">
                 <span>Delete</span>
                 <i class="fa-regular fa-trash-can"></i></button>
-              <button @click="editPost(post.id)"> <!-- Utilisez la fonction editPost pour ouvrir la modale -->
+              <button @click="editPost(post.id)"> 
                 <span>Edit Post</span>
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
@@ -116,7 +136,7 @@ export default {
           </div>
           <span class="user-name">{{ post.username }}</span>
           <!-- SMALL MODAL OPEN  -->
-          <span class="open-small-modal-post"><i class="fa-solid fa-ellipsis"></i></span>
+          <span @click="toggleSmallModal(post.id)" id="toggle-small-modal" class="open-small-modal-post"><i class="fa-solid fa-ellipsis"></i></span>
         </div>
         <div class="card-body">
           <img :src="post.post_picture" alt="post-pic">
@@ -128,7 +148,8 @@ export default {
           </div>
           <span class="card-footer-icons"><i class="fa-regular fa-bookmark"></i></span>
         </div>
-        <p class="description">{{ post.description }}</p>
+        <p class="description mt-2 text-base">{{ post.description }}</p>
+        <hr class="w-4/5 mx-auto mt-2"/>
         <div class="comment">
           <Comment :postId="post.id" />
         </div>

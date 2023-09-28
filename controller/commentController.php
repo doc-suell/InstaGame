@@ -79,6 +79,7 @@ if (isset($_REQUEST['action'])) {
         // Récupérez les informations de l'utilisateur connecté depuis la session ou d'où elles sont stockées
         $userInfo = [
             "id" => $_SESSION['id'],
+            "username" => $_SESSION['user'],
 
             // Autres informations de l'utilisateur
         ];

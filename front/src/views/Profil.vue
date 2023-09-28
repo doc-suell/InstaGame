@@ -1,17 +1,19 @@
 <template>
     <NavBar />
-        <div class="text-black text-4xl">
-            <div class="mx-auto text-center mt-12 mb-24">
-                <img :src="profilePicture" alt="profil picture" class="mb-12 w-[10%] mx-auto">
-                <span>{{ username }}</span>
-            </div>
-            <div class="container mx-auto px-4">
-                <div v-if="posts && posts.length > 0">
-                    <PostCard @postDeleted="handlePostDeleted" :posts="posts" />
-                </div>
-                <span v-else>No posts available</span>
-            </div>
+    <div class="container profile-container">
+        <div class="header-profile">
+        <div class="profile">
+            <img :src="profilePicture" alt="profil picture" class="">
+        </div>
+        <p>User Name : <span class="">{{ username }}</span></p> 
+        <span>{{ email }}</span>
     </div>
+        <div v-if="posts && posts.length > 0">
+            <PostCard @postDeleted="handlePostDeleted" :posts="posts" />
+        </div>
+        <span v-else>No posts available</span>
+    </div>
+
 </template>
     
   
@@ -37,6 +39,7 @@ export default {
         NavBar
     },
     setup() {
+        const email = ref("");
         const username = ref("");
         const id = ref("");
         const profilePicture = ref("");
@@ -45,6 +48,7 @@ export default {
         const formData = reactive({
             action: "checkConnection",
             username: "",
+            email: "",
         });
         const postData = reactive({
             action: "getPostsByUserId",
@@ -96,7 +100,8 @@ export default {
             profilePicture,
             formData,
             loginError,
-            posts
+            posts,
+            email
         }
     },
 };

@@ -1,23 +1,25 @@
 <template>
   <div>
-    <div v-for="(comment, index) in comments.slice(0, showAllComments ? comments.length : 3)" :key="index">
-
-      <p class="description">{{ comment.comment }}</p>
-
-
-      <button v-if="currentUser && currentUser.id === comment.user_id" @click="deleteComment(index)">Delete</button>
+    <div class="flex justify-between" v-for="(comment, index) in comments.slice(0, showAllComments ? comments.length : 3)" :key="index">
+      <p class="description mt-2 text-sm">
+        <strong>{{ comment.username }} : </strong>{{ truncateText(comment.comment) }} 
+      </p>
+      <button v-if="currentUser && currentUser.id === comment.user_id" @click="deleteComment(index)"><i class="fa-regular fa-trash-can"></i></button>
     </div>
 
     <!-- Afficher le bouton "See more" ou "See less" en fonction de l'état -->
-    <button @click="toggleCommentsDisplay">
-      {{ showAllComments ? "See less" : "See more" }}
-    </button>
+    <button @click="toggleCommentsDisplay" class="mt-1 text-sm text-blue-600">
+  {{ showAllComments ? "See less" : `See more comments (${comments.length - 3} more)` }}
+</button>
 
 
-    <div class="comment-input">
-      <input v-model="commentText" type="text" name="comment" id="comment" placeholder="Ajouter votre commentaire..." />
-      <button @click="addComment">Ajouter le commentaire</button>
+    <div class="comment-input p-1 mt-3 flex">
+      <input  class="bg-orange-100 p-2 rounded-xl w-3/4" v-model="commentText" type="text" name="comment" id="comment" placeholder="Add a comment..." />
+      <div class="ml-4">
+        <button @click="addComment" class="text-3xl transform hover:scale-110 transition-transform"><i class="fa-solid fa-square-plus"></i></button>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -47,6 +49,14 @@ export default {
 
   methods: {
 
+    truncateText(text) {
+    const maxLength = 40;
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  },
+
     toggleCommentsDisplay() {
       this.showAllComments = !this.showAllComments;
     },
@@ -63,10 +73,10 @@ export default {
             action: "getUserInfo",
           },
         });
-
+        // console.log('Current user:', response.data.username);
         if (response.data.id) {
           // Vous pouvez stocker les informations de l'utilisateur dans la variable currentUser
-          this.currentUser = response.data;
+          this.currentUser = response.data.username;
           // console.log(this.currentUser);
         } else {
           console.error("Unable to get current user information.");
@@ -149,75 +159,79 @@ export default {
     //(-------------------------------------)
 
     async getComments() {
-      try {
-        const response = await axios.get("http://localhost/instaGame/controller/commentController.php", {
-          params: {
-            action: "getComments",
-            post_id: this.postId,
-          },
-        });
+  try {
+    const response = await axios.get("http://localhost/instaGame/controller/commentController.php", {
+      params: {
+        action: "getComments",
+        post_id: this.postId,
+      },
+    });
 
-        if (response.data.error) {
-          this.error = response.data.error;
-        } else {
-          // Mettez à jour le tableau des commentaires avec les commentaires récupérés
-          for (let i = 0; i < response.data.length; i++) {
-            if (response.data[i].post_id == this.postId)
-              this.comments.push(response.data[i])
-          };
-          // console.log(this.comments);
+    if (response.data.error) {
+      this.error = response.data.error;
+    } else {
+      // Mettez à jour le tableau des commentaires avec les commentaires récupérés
+      for (let i = 0; i < response.data.length; i++) {
+        if (response.data[i].post_id == this.postId) {
+          const comment = response.data[i];
+          comment.username = await this.getUsernameForComment(comment.id);
+          this.comments.push(comment);
         }
-      } catch (error) {
-        console.error(error);
-        this.error = "Une erreur s'est produite lors de la récupération des commentaires.";
       }
-    },
+    }
+  } catch (error) {
+    console.error(error);
+    this.error = "Une erreur s'est produite lors de la récupération des commentaires.";
+  }
+},
 
     //----------------
 
     async addComment() {
-      if (!this.commentText) {
-        this.error = "Le texte du commentaire est requis.";
-        return;
-      }
+  if (!this.commentText) {
+    this.error = "Le texte du commentaire est requis.";
+    return;
+  }
 
-      const instance = axios.create({
-        baseURL: "http://localhost/instaGame/controller/",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Content-Type": "multipart/form-data",
-        },
-        withCredentials: true,
-      });
-
-      const formData = new FormData();
-      formData.append("action", "addComment");
-      formData.append("post_id", this.postId);
-      formData.append("comment", this.commentText);
-
-      try {
-        const response = await instance.post("commentController.php", formData);
-
-        if (response.data.error) {
-          this.error = response.data.error;
-        } else {
-          // Ajoutez le nouveau commentaire à la liste des commentaires
-          this.comments.unshift({
-            comment: this.commentText,
-            user_id: this.currentUser.id, // Assurez-vous que l'utilisateur actuel est correct
-
-          });
-          for (const comment of this.comments) {
-            comment.username = await this.getUsernameForComment(comment.id);
-          }
-          // Effacez le champ de texte de commentaire
-          this.commentText = "";
-        }
-      } catch (error) {
-        console.error(error);
-        this.error = "Une erreur s'est produite lors de l'ajout du commentaire.";
-      }
+  const instance = axios.create({
+    baseURL: "http://localhost/instaGame/controller/",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "multipart/form-data",
     },
+    withCredentials: true,
+  });
+
+  const formData = new FormData();
+  formData.append("action", "addComment");
+  formData.append("post_id", this.postId);
+  formData.append("comment", this.commentText);
+
+  try {
+    const response = await instance.post("commentController.php", formData);
+
+    if (response.data.error) {
+      this.error = response.data.error;
+    } else {
+      
+      // Utilisez directement this.currentUser.username pour le nouveau commentaire
+      const newComment = {
+        comment: this.commentText,
+        user_id: this.currentUser.id,
+        username: this.currentUser.username
+      };
+
+      // Ajoutez le nouveau commentaire au début du tableau
+      this.comments.unshift(newComment);
+
+      // Effacez le champ de texte de commentaire
+      this.commentText = "";
+    }
+  } catch (error) {
+    console.error(error);
+    this.error = "Une erreur s'est produite lors de l'ajout du commentaire.";
+  }
+},
   },
 
   created() {
@@ -234,3 +248,4 @@ export default {
   margin: 0 0 30px 0;
 }
 </style>
+
