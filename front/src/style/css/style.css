@@ -349,7 +349,6 @@ input[type=file]::file-selector-button:hover {
 
 
 .container{
-
   width: 70%;
   height: 100%;
   margin: auto;
@@ -537,6 +536,33 @@ input[type=file]::file-selector-button:hover {
 }
 
 
+/* -----------------   END MODAL POST -----------------  */
+
+
+
+/* -----------------   END MODAL POST -----------------  */
+
+.profile{
+  margin: 50px auto;
+  width: 50%;
+  cursor: pointer;
+  border: 1px solid var(--secondary-color);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+}
+
+.header-profile{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.header-profile>p{
+  font-size: 30px;
+  text-transform: uppercase;
+}
 /* -----------------   END MODAL POST -----------------  */
 
 
