@@ -14,7 +14,7 @@
 
 
     <div class="comment-input p-1 mt-3 flex">
-      <input class="bg-orange-100 p-2 rounded-xl w-3/4" v-model="commentText" type="text" name="comment" id="comment" placeholder="Add a comment..." />
+      <input  class="bg-orange-100 p-2 rounded-xl w-3/4" v-model="commentText" type="text" name="comment" id="comment" placeholder="Add a comment..." />
       <div class="ml-4">
         <button @click="addComment" class="text-3xl transform hover:scale-110 transition-transform"><i class="fa-solid fa-square-plus"></i></button>
       </div>
@@ -73,7 +73,7 @@ export default {
             action: "getUserInfo",
           },
         });
-        console.log('Current user:', response.data.username);
+        // console.log('Current user:', response.data.username);
         if (response.data.id) {
           // Vous pouvez stocker les informations de l'utilisateur dans la variable currentUser
           this.currentUser = response.data.username;
