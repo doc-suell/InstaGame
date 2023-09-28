@@ -153,7 +153,7 @@ export default {
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
               <button>
-                <span>Cancel</span>
+                <span @click="toggleModal">Cancel</span>
                 <i class="fa-solid fa-xmark"></i>
               </button>
             </ul>
