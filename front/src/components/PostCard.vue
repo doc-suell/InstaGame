@@ -18,6 +18,7 @@ export default {
       isModalOpenEdit: false,
       selectedPostId: null,
       postProfilPicture: "",
+      modalStates: {},
     };
   },
   methods: {
@@ -40,8 +41,8 @@ export default {
       this.selectedPostId = postId;
       this.openModalEdit();
     },
-    toggleSmallModal() {
-    this.isSmallModalOpen = !this.isSmallModalOpen;
+    toggleSmallModal(postId) {
+    this.modalStates[postId] = !this.modalStates[postId];
   },
 
   },
@@ -57,7 +58,7 @@ export default {
       <div class="card-items">
         <div class="card-header">
           <!-- SMALL MODAL  -->
-          <div v-show="isSmallModalOpen" id="smallModal" class="small-modal-post">
+          <div v-show="modalStates[post.id]" :id="'smallModal_' + post.id" class="small-modal-post">
             <!-- <div class="overlay-small-modal"></div> -->
             <ul>
               <button @click="deletePost(post.id)">
@@ -79,7 +80,7 @@ export default {
           </div>
           <span class="user-name">{{ post.username }}</span>
           <!-- SMALL MODAL OPEN  -->
-          <span @click="toggleSmallModal" id="toggle-small-modal" class="open-small-modal-post"><i class="fa-solid fa-ellipsis"></i></span>
+          <span @click="toggleSmallModal(post.id)" id="toggle-small-modal" class="open-small-modal-post"><i class="fa-solid fa-ellipsis"></i></span>
         </div>
         <div class="card-body">
           <img :src="post.post_picture" alt="post-pic">
