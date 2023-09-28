@@ -95,7 +95,6 @@ export default {
       this.formData.file = file;
     },
     redirectToLogin() {
-      // Rediriger vers la page de connexion
       this.$router.push("/login");
     },
     async submitForm() {
@@ -108,13 +107,10 @@ export default {
         alert("Tous les champs doivent être remplis.");
         return;
       }
-      // Vérifier si les champs de mot de passe et de confirmation sont identiques
       if (this.formData.password !== this.formData.confirmPassword) {
         alert("Les mots de passe ne correspondent pas.");
         return;
       }
-
-      // Créez une copie de formData
       const formDataCopy = { ...this.formData };
 
       try {

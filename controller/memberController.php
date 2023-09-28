@@ -78,9 +78,9 @@ if (isset($_POST['action'])) {
             }
         }
     } else if ($_POST['action'] == "getProfilPicture") {
-        $commentId = $_GET['id'];
-        $result = User::getProfilPictureByPostId($db, $commentId);
-        var_dump($result);
+        $db = new Database();
+        $postId = $_POST['post_id'];
+        $result = User::getProfilPictureByPostId($postId, $db);
         echo json_encode(["result" => $result, "message" => "Profil picture taken"]);
     } else if ($_POST['action'] == "logout") {
         session_destroy();

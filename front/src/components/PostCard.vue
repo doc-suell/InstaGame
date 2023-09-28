@@ -1,11 +1,38 @@
 <script>
-import { onMounted } from "vue";
 import Comment from "./Comment.vue";
 import EditPostModal from "./EditPostModal.vue";
 import axios from 'axios';
 
+const instance = axios.create({
+  baseURL: "http://localhost/instaGame/controller/",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Content-Type": "multipart/form-data",
+  },
+  withCredentials: true,
+});
+
+const getProfilPicture = async (postId) => {
+  const postData = {
+    action: "getProfilPicture",
+    post_id: postId,
+  };
+  try {
+    const response = await instance.post("memberController.php", postData);
+    return response.data.result.profile_picture;
+    // this.test.value = response.data.result.profile_picture
+    // if (response) {
+    //   this.profilPictures[postId] = response.data.profile_picture;
+    // }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
 export default {
   name: "PostCard",
+
   props: {
     posts: Array,
   },
@@ -13,11 +40,15 @@ export default {
   data() {
     return {
       isModalOpenEdit: false,
-      selectedPostId: null, // Ajoutez une propriété pour stocker l'ID du post sélectionné
-      postProfilPicture: "",
+      selectedPostId: null, //stocker l'ID sélectionné
+      profilPictures: {},
+      test: ""
     };
   },
+
   methods: {
+
+
     async deletePost(postId) {
       try {
         await axios.delete(`http://localhost/instaGame/controller/postController.php?action=deletePost&id=${postId}`);
@@ -27,24 +58,8 @@ export default {
         console.error('Erreur lors de la suppression du post :', error);
       }
     },
-    // async getProfilPicture(postId) {
-    //   try {
-    //     const response = await axios.post("http://localhost/instaGame/controller/memberController.php", {
-    //       params: {
-    //         action: "getProfilPicture",
-    //         post_id: postId,
-    //       },
-    //     });
-    //     console.log("-----", response.data);
 
-    //     if (response.data.error) {
-    //       this.error = response.data.error;
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //     this.error = "Une erreur s'est produite lors de la récupération des photos.";
-    //   }
-    // },
+
     openModalEdit() {
       this.isModalOpenEdit = true;
     },
@@ -55,7 +70,19 @@ export default {
       this.selectedPostId = postId;
       this.openModalEdit();
     },
+
   },
+
+  created() {
+    for (const post of this.posts) {
+      getProfilPicture(post.user_id).then((res) =>
+      {
+        this.profilPictures[post.user_id] = res;
+        // console.log(res);
+      })
+    }
+  }
+
 }
 </script>
 
@@ -64,6 +91,7 @@ export default {
     <div class="cards" v-for="post in posts" :key="post.id">
       <!-- SINGLE CARD :// -->
       <div class="card-items">
+
         <div class="card-header">
           <!-- SMALL MODAL  -->
           <div id="smallModal" class="small-modal-post">
@@ -84,7 +112,7 @@ export default {
           </div>
           <!-- END SMALL MODAL  -->
           <div class="pic-profile-nav">
-            <img src="/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="profile-pic">
+            <img :src="profilPictures[post.user_id]" alt="profile-pic">
           </div>
           <span class="user-name">{{ post.username }}</span>
           <!-- SMALL MODAL OPEN  -->

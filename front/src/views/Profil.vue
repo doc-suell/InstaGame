@@ -1,16 +1,16 @@
 <template>
     <NavBar />
-    <div class="text-black text-4xl">
-        <div class="mx-auto text-center mt-12 mb-24">
-            <img :src="profilePicture" alt="profil picture" class="mb-12 w-[10%] mx-auto">
-            <span>{{ username }}</span>
-        </div>
-        <div class="container mx-auto px-4">
-            <div v-if="posts && posts.length > 0">
-                <PostCard @postDeleted="handlePostDeleted" :posts="posts" />
+        <div class="text-black text-4xl">
+            <div class="mx-auto text-center mt-12 mb-24">
+                <img :src="profilePicture" alt="profil picture" class="mb-12 w-[10%] mx-auto">
+                <span>{{ username }}</span>
             </div>
-            <span v-else>No posts available</span>
-        </div>
+            <div class="container mx-auto px-4">
+                <div v-if="posts && posts.length > 0">
+                    <PostCard @postDeleted="handlePostDeleted" :posts="posts" />
+                </div>
+                <span v-else>No posts available</span>
+            </div>
     </div>
 </template>
     
@@ -33,9 +33,9 @@ const instance = axios.create({
 
 export default {
     components: {
-    PostCard,
-    NavBar
-},
+        PostCard,
+        NavBar
+    },
     setup() {
         const username = ref("");
         const id = ref("");
