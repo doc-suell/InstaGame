@@ -1,85 +1,108 @@
-<script setup>
-
-import { modalStates, toggleModal } from '../modal';
-import { useRoute, useRouter } from 'vue-router'; // Importez useRoute et useRouter
-import { onMounted, reactive, ref, watch } from 'vue';
+<script>
 import axios from "axios";
 import SearchBar from './SearchBar.vue';
 import CreatPostModal from './CreatPostModal.vue';
 
-
-// const modalStates = ref(false);
-// const toggleModal = () => {
-//     modalStates.value = !modalStates.value; 
-// };
-
-
-
-
-const isModalOpen = ref(false);
-
-const route = useRoute(); // Utilisez useRoute pour accéder à la route actuelle
-const router = useRouter(); // Utilisez useRouter pour accéder au routeur
-
-const isUserConnected = ref(false);
-const openModal = () => {
-    isModalOpen.value = true;
-};
-
-const closeModal = () => {
-    isModalOpen.value = false;
-};
-const instance = axios.create({
-    baseURL: "http://localhost/instaGame/controller/",
-    headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-    },
-    withCredentials: true,
-});
-
-const formData = reactive({
-    action: "logout",
-});
-const formData2 = reactive({
-    action: "checkConnection",
-    username: "",
-});
-
-
-const logout = async () => {
-    try {
-        const response = await instance.post("memberController.php", formData);
-
-        if (response.data) {
-            router.push("/login");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-const checkConnection = async () => {
-    try {
-        const response = await instance.post("memberController.php", formData2);
-
-        if (response.data.user) {
-            isUserConnected.value = true; // Mettez à jour la valeur de isUserConnected
-        }
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-</script>
-
-<script>
-
 export default {
-    components: {
-        SearchBar,
-        CreatPostModal,
+  components: {
+    SearchBar,
+    CreatPostModal,
+  },
+
+  data() {
+    return {
+      isModalOpen: false,
+      isUserConnected: false,
+      userProfilePic: "",
+    };
+  },
+
+  methods: {
+    openModal() {
+      this.isModalOpen = true;
     },
-}
+
+    closeModal() {
+      this.isModalOpen = false;
+    },
+
+    async checkProfile() {
+      try {
+        const instance = axios.create({
+          baseURL: "http://localhost/instaGame/controller/",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          withCredentials: true,
+        });
+
+        const formData = {
+          action: "checkConnection",
+          username: "",
+        };
+
+        const response = await instance.post("memberController.php", formData);
+        if (response.data.user) {
+          this.isUserConnected = true;
+          this.userProfilePic = response.data.user.profile_picture;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async logout() {
+      const instance = axios.create({
+        baseURL: "http://localhost/instaGame/controller/",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        withCredentials: true,
+      });
+
+      const formData = {
+        action: "logout",
+      };
+
+      try {
+        const response = await instance.post("memberController.php", formData);
+        if (response.data) {
+          this.$router.push("/login");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async checkConnection() {
+      const instance = axios.create({
+        baseURL: "http://localhost/instaGame/controller/",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        withCredentials: true,
+      });
+
+      const formData = {
+        action: "checkConnection",
+      };
+
+      try {
+        const response = await instance.post("memberController.php", formData);
+        if (response.data.user) {
+          this.isUserConnected = true;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
+
+  created() {
+    this.checkConnection();
+    this.checkProfile();
+  },
+};
 </script>
 
 <template>
@@ -147,14 +170,14 @@ export default {
                 </ul>
             </div>
             <!-- PROFILE LINK MODALE  -->
-            <div @click="toggleModal" id="modal-button" class="pic-profile-nav">
-                <img src="/assets/images/E-TAfEiWYAI_Qgu.jpg" alt="pic-profil">
-            </div>
+            <div id="modal-button" class="pic-profile-nav">
+    <img :src="userProfilePic" alt="pic-profil">
+</div>
             <!-- END PROFILE LINK MODALE  -->
 
         </nav>
         <!-- MODAL  -->
-        <div v-show="modalStates" id="modal" class="modal hidden">
+        <div id="modal" class="modal hidden">
             <ul>
                 <router-link to="/profil" id="link-modal" class="link-modal">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -169,7 +192,7 @@ export default {
                         <path
                             d="M96 0C78.3 0 64 14.3 64 32v96h64V32c0-17.7-14.3-32-32-32zM288 0c-17.7 0-32 14.3-32 32v96h64V32c0-17.7-14.3-32-32-32zM32 160c-17.7 0-32 14.3-32 32s14.3 32 32 32v32c0 77.4 55 142 128 156.8V480c0 17.7 14.3 32 32 32s32-14.3 32-32V412.8C297 398 352 333.4 352 256V224c17.7 0 32-14.3 32-32s-14.3-32-32-32H32z" />
                     </svg>
-                    <span class="pl-[6px]">Logout</span>
+                    <span>Logout</span>
                 </router-link>
             </ul>
         </div>
@@ -185,7 +208,6 @@ export default {
         <!-- END ADD POSTE MODAL  -->
     <!-- </div> -->
 </template>
-
 
 
 
