@@ -7,6 +7,9 @@ Welcome to InstaGame, an open-source project that draws inspiration from Instagr
 ## Screenshots
 
 ### Login
+
+<div align="center">
+
 <img src="images/login.png">
 
 ### SignUp
@@ -25,6 +28,7 @@ Welcome to InstaGame, an open-source project that draws inspiration from Instagr
 
 <img src="images/addPost.png">
 
+</div>
 
 
 ### Key Contributors
