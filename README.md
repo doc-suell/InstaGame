@@ -103,7 +103,7 @@ Start the server
 
 ## Contributing
 
-We invite contributions from the open-source community. Whether you wish to add new features, improve existing ones, or fix bugs, your involvement is appreciated. Please don't hesitate to open an issue or submit a pull request, and let's collaborate to enhance InstaGame even further!
+We invite contributions from the open-source community. Whether you wish to add new features, improve existing ones, or fix bugs, your involvement is appreciated. Please don't hesitate to open an issue or submit a pull request.
 
 ## Authors
 
