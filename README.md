@@ -28,6 +28,10 @@ Welcome to InstaGame, an open-source project that draws inspiration from Instagr
 
 <img src="images/addPost.png">
 
+### BDD
+
+<img src="images/BDD.png">
+
 </div>
 
 
