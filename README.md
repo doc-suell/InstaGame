@@ -1,8 +1,31 @@
-# InstaGame
+# InstaGame Clone instagrame
 
 ## ⚒ Project Overview
 
-Welcome to InstaGame, an open-source project that draws inspiration from Instagram. Our mission is to provide a comprehensive learning resource for developers who want to explore the development of a social media platform. We've designed this project to offer a hands-on experience and insight into the key functionalities of such platforms.
+Welcome to InstaGame, an open-source project that draws inspiration from Instagram. Using PHP for backend and Vue.Js in frontend
+
+## Screenshots
+
+### Login
+<img src="images/login.png">
+
+### SignUp
+
+<img src="images/signUp.png">
+
+### Overview
+
+<img src="images/Overview.png">
+
+### Post Card
+
+<img src="images/postCard.png">
+
+### Add Post
+
+<img src="images/addPost.png">
+
+
 
 ### Key Contributors
 
