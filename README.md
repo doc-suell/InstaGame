@@ -30,7 +30,7 @@ Welcome to InstaGame, an open-source project that draws inspiration from Instagr
 
 ### BDD
 
-<img src="images/BDD.png">
+/**<img src="images/BDD.png">*/
 
 </div>
 
